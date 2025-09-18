@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "trailoflight:item/lambent_crystal_dust"
+  }
+}

@@ -1,0 +1,11 @@
+
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "trailoflight:item/glittering_ingot"
+  },
+
+  "properties": {
+    "hand_animation_on_swap": false
+  }
+}
