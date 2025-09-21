@@ -16,7 +16,7 @@ public class ModCreativeTabs {
 
     public static final Supplier<CreativeModeTab> TRAIL_OF_LIGHT_TAB = CREATIVE_MODE_TABS.register("trail_of_light_tab",
             () -> CreativeModeTab.builder()
-                    .title(Component.literal("tol"))
+                    .title(Component.translatable("itemGroup.trailoflight"))
                     .icon(() -> ModItems.LIGHT_SABER.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         output.acceptAll(Stream.of(

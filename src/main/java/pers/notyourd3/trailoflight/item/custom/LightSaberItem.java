@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +30,12 @@ public class LightSaberItem extends Item implements IChargableItem{
     @Override
     public boolean isFoil(ItemStack stack){
         return getEnabled(stack);
+    }
+    @Override
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if(getEnabled(stack)){
+            IChargableItem.decreaseBeam(stack,400);
+        }
     }
     @Override
     public float getAttackDamageBonus(Entity target, float damage, DamageSource damageSource) {

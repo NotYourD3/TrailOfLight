@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:red_concrete",
+    "I": "minecraft:diamond",
+    "O": "minecraft:glowstone",
+    "S": "minecraft:coal_block"
+  },
+  "pattern": [
+    "GOG",
+    "SIS",
+    "GOG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:laser_generator"
+  }
+}
