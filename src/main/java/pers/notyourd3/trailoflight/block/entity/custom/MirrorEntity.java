@@ -34,7 +34,6 @@ public class MirrorEntity extends BlockEntity {
     }
 
     public void onBeam(Beam beam){
-        // 防止无限反弹导致栈溢出
         if (beam.life >= Beam.MAX_BOUNCES) return;
         
         float x, y;

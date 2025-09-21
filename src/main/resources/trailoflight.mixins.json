@@ -4,6 +4,7 @@
   "package": "pers.notyourd3.trailoflight.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ItemMixin"
   ],
   "client": [
   ],

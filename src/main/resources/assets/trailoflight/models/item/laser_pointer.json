@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "trailoflight:item/laser_pointer",
+    "layer1": "trailoflight:item/laser_pointer_glow"
+  }
+}

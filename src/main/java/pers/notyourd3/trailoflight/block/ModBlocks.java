@@ -22,11 +22,6 @@ import static pers.notyourd3.trailoflight.Trailoflight.MODID;
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
 
-    public static final DeferredBlock<Block> ENTROPIUM_ORE = registerBlock("entropium_ore",() -> new Block(Block.Properties.of()
-            .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "entropium_ore")))
-            .strength(3f)
-            .requiresCorrectToolForDrops()));
-
     public static final DeferredBlock<Block> MAGNIFIER = registerBlock("magnifier", 
             () -> new MagnifierBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "magnifier")))

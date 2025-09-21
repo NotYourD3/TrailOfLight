@@ -2,18 +2,10 @@ package pers.notyourd3.trailoflight;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.bus.EventBus;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -22,15 +14,12 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 import pers.notyourd3.trailoflight.block.ModBlocks;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
@@ -38,8 +27,13 @@ import pers.notyourd3.trailoflight.block.entity.render.ChargerEntityRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.MirrorEntityRenderer;
 import pers.notyourd3.trailoflight.client.render.LaserRenderer;
 import pers.notyourd3.trailoflight.feature.BeamManager;
+import pers.notyourd3.trailoflight.item.ModCreativeTabs;
+import pers.notyourd3.trailoflight.item.ModDataComponents;
 import pers.notyourd3.trailoflight.item.ModItems;
 import pers.notyourd3.trailoflight.network.PacketLaserFX;
+import pers.notyourd3.trailoflight.recipe.ModRecipeSerializers;
+import pers.notyourd3.trailoflight.recipe.ModRecipeTypes;
+import pers.notyourd3.trailoflight.recipe.ModRecipes;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -55,9 +49,15 @@ import pers.notyourd3.trailoflight.network.PacketLaserFX;
             modEventBus.addListener(this::commonSetup);
             modEventBus.addListener(this::ClientSetup);
             modEventBus.addListener(this::registerEntityRenderers);
+            modEventBus.addListener(this::gatherData);
+            modEventBus.addListener(this::registerColorHandlers);
+            ModDataComponents.register(modEventBus);
             ModBlocks.register(modEventBus);
             ModBlockEntities.register(modEventBus);
             ModItems.register(modEventBus);
+            ModRecipeTypes.register(modEventBus);
+            ModRecipeSerializers.register(modEventBus);
+            ModCreativeTabs.register(modEventBus);
             forgeEventBus.register(this);
             modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         }
@@ -79,6 +79,7 @@ import pers.notyourd3.trailoflight.network.PacketLaserFX;
             NeoForge.EVENT_BUS.register(LaserRenderer.INSTANCE);
         }
 
+
         @SubscribeEvent
         public void onServerStarting(ServerStartingEvent event) {
         }
@@ -88,9 +89,19 @@ import pers.notyourd3.trailoflight.network.PacketLaserFX;
             registrar.playToClient(PacketLaserFX.TYPE, PacketLaserFX.STREAM_CODEC, (packet,context) -> packet.handle(packet,context));
         }
 
-         public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        public void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.MIRROR.get(), MirrorEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.CHARGER.get(), ChargerEntityRenderer::new);
         }
+        public void gatherData(GatherDataEvent.Client event){
+            event.createProvider(ModRecipes.Runner::new);
+        }
+        public void registerColorHandlers(RegisterColorHandlersEvent.ItemTintSources event){
+            event.register(
+                    ResourceLocation.fromNamespaceAndPath(MODID, "beam_color"),
+                    ModDataComponents.BeamColorSource.MAP_CODEC
+            );
+        }
+
 
     }

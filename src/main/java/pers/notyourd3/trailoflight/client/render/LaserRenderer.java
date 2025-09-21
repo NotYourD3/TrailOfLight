@@ -29,12 +29,23 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import static net.minecraft.client.renderer.RenderPipelines.ENTITY_SNIPPET;
+import static net.minecraft.client.renderer.RenderPipelines.MATRICES_PROJECTION_SNIPPET;
 import static pers.notyourd3.trailoflight.Trailoflight.MODID;
 
 
 public class LaserRenderer {
     public static final LaserRenderer INSTANCE = new LaserRenderer();
-
+    public RenderType LASER_TYPE = RenderType.create("celestial", 1536, false, false,
+            RenderPipeline.builder(ENTITY_SNIPPET)
+                    .withLocation(ResourceLocation.fromNamespaceAndPath(MODID, "pipeline/laser"))
+                    .withVertexShader(ResourceLocation.fromNamespaceAndPath(MODID,"core/position_tex_color"))
+                    .withFragmentShader(ResourceLocation.fromNamespaceAndPath(MODID,"core/position_tex_color"))
+                    .withSampler("Sampler0").withBlend(BlendFunction.TRANSLUCENT).withDepthWrite(false)
+                    .withCull(false)
+                    .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
+                    .build()
+    , RenderType.CompositeState.builder()
+                    .setTextureState(new RenderStateShard.TextureStateShard(ResourceLocation.fromNamespaceAndPath(MODID, "textures/misc/laser.png"), false)).createCompositeState(false));;
     Set<LaserRenderInfo> lasers = new HashSet<>();
     @SubscribeEvent
     public void load(LevelEvent.Load event){
@@ -53,7 +64,8 @@ public class LaserRenderer {
         ps.pushPose();
         ps.translate(-camPos.x, -camPos.y, -camPos.z);
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer builder = bufferSource.getBuffer(RenderType.celestial(ResourceLocation.fromNamespaceAndPath(MODID, "textures/misc/laser.png")));
+        VertexConsumer builder = bufferSource.getBuffer(//RenderType.celestial(ResourceLocation.fromNamespaceAndPath(MODID, "textures/misc/laser.png")));
+                LASER_TYPE);
         Matrix4f matrix = ps.last().pose();
         for (LaserRenderInfo laser : lasers) {
             drawLaser(builder, matrix, laser.start, laser.end, laser.color);
@@ -91,18 +103,18 @@ public class LaserRenderer {
 
         pos(consumer, matrix, start.add(d)).setColor(r, g, b, a).setUv(uMin,vMin);
         pos(consumer, matrix, start.subtract(d)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.add(d)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.subtract(d)).setColor(r, g, b, a).setUv(uMax,vMin);
+        pos(consumer, matrix, end.subtract(d)).setColor(r, g, b, a).setUv(uMax,vMax);
+        pos(consumer, matrix, end.add(d)).setColor(r, g, b, a).setUv(uMax,vMin);
 
         pos(consumer, matrix, start.add(d2)).setColor(r, g, b, a).setUv(uMin,vMin);
         pos(consumer, matrix, start.subtract(d2)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.add(d2)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.subtract(d2)).setColor(r, g, b, a).setUv(uMax,vMin);
+        pos(consumer, matrix, end.subtract(d2)).setColor(r, g, b, a).setUv(uMax,vMax);
+        pos(consumer, matrix, end.add(d2)).setColor(r, g, b, a).setUv(uMax,vMin);
 
         pos(consumer, matrix, start.add(d3)).setColor(r, g, b, a).setUv(uMin,vMin);
         pos(consumer, matrix, start.subtract(d3)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.add(d3)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.subtract(d3)).setColor(r, g, b, a).setUv(uMax,vMin);
+        pos(consumer, matrix, end.subtract(d3)).setColor(r, g, b, a).setUv(uMax,vMax);
+        pos(consumer, matrix, end.add(d3)).setColor(r, g, b, a).setUv(uMax,vMin);
     }
     private static VertexConsumer pos(VertexConsumer consumer,Matrix4f matrix,Vec3 pos){
         return consumer.addVertex(matrix,(float) pos.x, (float) pos.y, (float) pos.z).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(0,1,0);

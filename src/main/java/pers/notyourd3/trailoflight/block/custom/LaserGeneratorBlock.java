@@ -20,16 +20,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.block.entity.custom.LaserGeneratorEntity;
+import pers.notyourd3.trailoflight.feature.Beam;
 
-public class LaserGeneratorBlock extends BaseEntityBlock {
+import java.awt.*;
+
+public class LaserGeneratorBlock extends AbstractGeneratorBlock {
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
     private static final MapCodec<LaserGeneratorBlock> CODEC = simpleCodec(LaserGeneratorBlock::new);
 
     public LaserGeneratorBlock(Properties p_49224_) {
         super(p_49224_);
+    }
+
+    @Override
+    public Color getBeamColor() {
+        return new Color(255,0,0,16);
     }
 
     @Nullable
@@ -76,7 +85,7 @@ public class LaserGeneratorBlock extends BaseEntityBlock {
         LaserGeneratorEntity entity = getEntity(level, pos);
         int burnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
         if (burnTime > 0) {
-            entity.addFuel(burnTime);
+            entity.addFuel(burnTime/5);
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
             }

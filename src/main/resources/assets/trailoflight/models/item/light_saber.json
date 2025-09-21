@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "trailoflight:item/light_saber",
+    "layer1": "trailoflight:item/light_saber_sword"
+  }
+}
