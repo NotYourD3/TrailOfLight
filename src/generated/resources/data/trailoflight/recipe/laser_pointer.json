@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:iron_ingot",
+    "G": "trailoflight:glittering_ingot"
+  },
+  "pattern": [
+    " G ",
+    "GGG",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:laser_pointer"
+  }
+}

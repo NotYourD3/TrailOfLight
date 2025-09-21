@@ -22,8 +22,8 @@ public class LaserGeneratorEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, LaserGeneratorEntity entity) {
         if (entity.fuel > 0) {
-            Color color = new Color(255,255,255,1);
-            if(state.getBlock() instanceof AbstractGeneratorBlock block){
+            Color color = new Color(255, 255, 255, 1);
+            if (state.getBlock() instanceof AbstractGeneratorBlock block) {
                 color = block.getBeamColor();
             }
             Beam beam = new Beam(pos.getCenter(), state.getValue(LaserGeneratorBlock.FACING).getUnitVec3(), level, color);

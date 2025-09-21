@@ -18,6 +18,7 @@ public class ModRecipeTypes {
                     "beam_type",
                     RecipeType::simple
             );
+
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);
     }

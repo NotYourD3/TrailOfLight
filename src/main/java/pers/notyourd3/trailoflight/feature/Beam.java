@@ -4,8 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,8 +24,8 @@ import java.util.Optional;
 
 
 public class Beam {
-    private final double range = 200;
     public static final int MAX_BOUNCES = 8; // 最大反弹次数
+    private final double range = 200;
     public Vec3 initLoc;
     public Vec3 endLoc;
     public Vec3 rotation;
@@ -52,7 +50,8 @@ public class Beam {
         this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
         return this;
     }
-    public Boolean isInRange(Color colorMin, Color colorMax){
+
+    public Boolean isInRange(Color colorMin, Color colorMax) {
         return color.getRed() >= colorMin.getRed() && color.getRed() <= colorMax.getRed() &&
                 color.getGreen() >= colorMin.getGreen() && color.getGreen() <= colorMax.getGreen() &&
                 color.getBlue() >= colorMin.getBlue() && color.getBlue() <= colorMax.getBlue() &&
@@ -76,7 +75,7 @@ public class Beam {
                 .trace();
         if (trace == null) return;
         this.endLoc = trace.getLocation();
-        if(trace instanceof BlockHitResult){
+        if (trace instanceof BlockHitResult) {
             BlockPos pos = BlockPos.containing(endLoc);
             BlockState state = level.getBlockState(pos);
             if (state.getBlock() instanceof IBeamHandler) {
@@ -93,13 +92,13 @@ public class Beam {
                         ModRecipeTypes.BEAM_TYPE.get(), input, level
                 );
                 ItemStack result = optional.map(RecipeHolder::value)
-                        .map(e-> e.assemble(input,level.registryAccess()))
+                        .map(e -> e.assemble(input, level.registryAccess()))
                         .orElse(ItemStack.EMPTY);
                 if (!result.isEmpty()) {
                     ItemEntity entity2 = new ItemEntity(level,
                             endLoc.x, endLoc.y, endLoc.z, result);
                     level.addFreshEntity(entity2);
-                    itemEntity.setItem(itemEntity.getItem().consumeAndReturn(itemEntity.getItem().getCount()-1,null));
+                    itemEntity.setItem(itemEntity.getItem().consumeAndReturn(itemEntity.getItem().getCount() - 1, null));
                 }
             }
         }

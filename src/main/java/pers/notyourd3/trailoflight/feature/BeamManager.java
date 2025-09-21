@@ -6,8 +6,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import java.util.Set;
 
 public class BeamManager {
-    public Set<Beam> beams = new java.util.HashSet<>();
     public static final BeamManager INSTANCE = new BeamManager();
+    public Set<Beam> beams = new java.util.HashSet<>();
+
     @SubscribeEvent
     public void onTick(ServerTickEvent.Pre event) {
         Set<Beam> beamsToProcess = beams;
@@ -16,6 +17,7 @@ public class BeamManager {
             beam.spawn();
         }
     }
+
     public void addBeam(Beam beam) {
         beams.add(beam);
     }

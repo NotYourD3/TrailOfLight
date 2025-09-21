@@ -27,23 +27,28 @@ import java.util.Optional;
 public class ChargerEntity extends BlockEntity {
     private final ItemStackHandler itemHandler = new ItemStackHandler(1);
     private int alphaCache = 0;
-    public ChargerEntity( BlockPos pos, BlockState blockState) {
+
+    public ChargerEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.CHARGER.get(), pos, blockState);
     }
+
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
+
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
     }
+
     @Override
-    public void loadAdditional(ValueInput input){
+    public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         itemHandler.deserialize(input);
         alphaCache = input.getIntOr("alphaCache", 0);
     }
+
     @Override
     public void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
@@ -51,38 +56,41 @@ public class ChargerEntity extends BlockEntity {
         output.putInt("alphaCache", alphaCache);
     }
 
-    public ItemStackHandler getItemHandler(){
+    public ItemStackHandler getItemHandler() {
         return this.itemHandler;
     }
+
     public ItemStack getStack() {
         return this.itemHandler.getStackInSlot(0);
     }
+
     public void setStack(ItemStack stack) {
         this.itemHandler.setStackInSlot(0, stack);
         alphaCache = 0;
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
-    public void onBeam(Beam beam){
-        if(getStack().getItem() instanceof IChargableItem){
+
+    public void onBeam(Beam beam) {
+        if (getStack().getItem() instanceof IChargableItem) {
             IChargableItem.addBeam(getStack(), beam);
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }else{
-        BeamRecipeInput input = new BeamRecipeInput(beam,
-                Collections.singletonList(getStack()),alphaCache);
-        Optional<RecipeHolder<BeamRecipe>> optional = level.getServer().getRecipeManager().getRecipeFor(
-                ModRecipeTypes.BEAM_TYPE.get(), input, level
-        );
-        ItemStack result = optional.map(RecipeHolder::value)
-                .map(e-> e.assemble(input,level.registryAccess()))
-                .orElse(ItemStack.EMPTY);
-        if (!result.isEmpty()) {
-            ItemEntity entity = new ItemEntity(level,
-                    getBlockPos().getCenter().x, getBlockPos().getCenter().y+1, getBlockPos().getCenter().z, result);
-            level.addFreshEntity(entity);
-            setStack(getStack().consumeAndReturn(getStack().getCount()-1,null));
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        }
+        } else {
+            BeamRecipeInput input = new BeamRecipeInput(beam,
+                    Collections.singletonList(getStack()), alphaCache);
+            Optional<RecipeHolder<BeamRecipe>> optional = level.getServer().getRecipeManager().getRecipeFor(
+                    ModRecipeTypes.BEAM_TYPE.get(), input, level
+            );
+            ItemStack result = optional.map(RecipeHolder::value)
+                    .map(e -> e.assemble(input, level.registryAccess()))
+                    .orElse(ItemStack.EMPTY);
+            if (!result.isEmpty()) {
+                ItemEntity entity = new ItemEntity(level,
+                        getBlockPos().getCenter().x, getBlockPos().getCenter().y + 1, getBlockPos().getCenter().z, result);
+                level.addFreshEntity(entity);
+                setStack(getStack().consumeAndReturn(getStack().getCount() - 1, null));
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            }
         }
         alphaCache += beam.color.getAlpha();
         setChanged();

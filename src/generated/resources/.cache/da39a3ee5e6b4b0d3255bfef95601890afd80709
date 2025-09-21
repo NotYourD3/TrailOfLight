@@ -1,5 +1,19 @@
-// 1.21.8	2025-09-21T18:07:46.5427195	
+// 1.21.8	2025-09-21T19:58:59.4047872	
+60885ebdf8f070bda085812a0bafabc22a13385f data/trailoflight/advancement/recipes/glittering_ingot.json
 bdabe81535f33d01d8f1f22b1194a425c8de3128 data/trailoflight/advancement/recipes/lambent_powder.json
+7a5c4186ddf2ada0832571d7c7376f36b759b112 data/trailoflight/advancement/recipes/misc/charger.json
 eef403f6eb907a06ec0ff3a76e3a1c82ae7f7775 data/trailoflight/advancement/recipes/misc/laser_generator.json
+76dec68c44b7f6b2088926eac845824ce31b2709 data/trailoflight/advancement/recipes/misc/laser_pointer.json
+38d0f58aa76483d7378769faad9cee7f876c01d4 data/trailoflight/advancement/recipes/misc/light_saber.json
+eb8ff00df1c334abd5549a31f3d4646a7accc679 data/trailoflight/advancement/recipes/misc/mirror.json
+249e1fe3c0bf21fb526d13d03dc08482756573ac data/trailoflight/advancement/recipes/misc/reflection_chamber.json
+868e3ebd2d6eab8c4778fa831c0880e1d2330994 data/trailoflight/advancement/recipes/misc/screw_driver.json
+d5001f430d9cf9a73dd8e2f482db76172131b53d data/trailoflight/recipe/charger.json
+b0b13dc752cdc7505f0323cf7fc3d37a41792d61 data/trailoflight/recipe/glittering_ingot.json
 03fb3037483b9caf3cd54ea001a0d54e21ed9296 data/trailoflight/recipe/lambent_powder.json
-925185f3547bb983eb8b3c38f478218e6cb5d034 data/trailoflight/recipe/laser_generator.json
+38f48838569bb7da8df2915f42d5017bbbf20e75 data/trailoflight/recipe/laser_generator.json
+e5d031b770444a7ec7ef1fd8a7ed8b7c5c564694 data/trailoflight/recipe/laser_pointer.json
+567e7dfb32ecc59e3c5d5f597bd2e75812fc26ae data/trailoflight/recipe/light_saber.json
+d62a15383248c1025b9b06f21f014b1d1c229ed1 data/trailoflight/recipe/mirror.json
+a894d52c746d962012d27b110ad722d6cc74c6c4 data/trailoflight/recipe/reflection_chamber.json
+2907dd7259cdfd41bc8099282e8075dff6a00809 data/trailoflight/recipe/screw_driver.json

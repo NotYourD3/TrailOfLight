@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import pers.notyourd3.trailoflight.block.entity.custom.MirrorEntity;
@@ -17,7 +15,8 @@ import pers.notyourd3.trailoflight.block.entity.custom.MirrorEntity;
 public class MirrorEntityRenderer implements BlockEntityRenderer<MirrorEntity> {
     private static final ResourceLocation MIRROR_TEXTURE = ResourceLocation.fromNamespaceAndPath("trailoflight", "textures/block/mirror_face.png");
 
-    public MirrorEntityRenderer(BlockEntityRendererProvider.Context context) {}
+    public MirrorEntityRenderer(BlockEntityRendererProvider.Context context) {
+    }
 
     @Override
     public void render(MirrorEntity mirrorEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay, Vec3 vec3) {

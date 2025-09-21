@@ -8,7 +8,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -98,7 +97,8 @@ public class MirrorBlock extends BaseEntityBlock implements ILaserTrace, IBeamHa
     public VoxelShape getShape(BlockState state, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
         return Shapes.rotateHorizontal(makeShape()).get(state.getValue(FACING));
     }
-    public VoxelShape makeShape(){
+
+    public VoxelShape makeShape() {
         VoxelShape shape = Shapes.empty();
         shape = Shapes.join(shape, Shapes.box(0, 0.0625, 0.4375, 0.0625, 0.6875, 0.5625), BooleanOp.OR);
         shape = Shapes.join(shape, Shapes.box(0, 0, 0.25, 0.0625, 0.0625, 0.75), BooleanOp.OR);
@@ -108,6 +108,7 @@ public class MirrorBlock extends BaseEntityBlock implements ILaserTrace, IBeamHa
 
         return shape;
     }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getHorizontalDirection().getOpposite();
@@ -116,7 +117,7 @@ public class MirrorBlock extends BaseEntityBlock implements ILaserTrace, IBeamHa
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        if(!level.isClientSide()) {
+        if (!level.isClientSide()) {
             float x = 0, y = 0;
             switch (state.getValue(FACING)) {
                 case WEST:

@@ -11,18 +11,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import pers.notyourd3.trailoflight.block.entity.IBeamHandler;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
-import pers.notyourd3.trailoflight.block.entity.custom.MagnifierEntity;
 import pers.notyourd3.trailoflight.block.entity.custom.ReflectionChamberEntity;
 import pers.notyourd3.trailoflight.feature.Beam;
 
 public class ReflectionChamberBlock extends BaseEntityBlock implements IBeamHandler {
     private static final MapCodec<ReflectionChamberBlock> CODEC = simpleCodec(ReflectionChamberBlock::new);
+
     public ReflectionChamberBlock(Properties properties) {
         super(properties);
     }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createTickerHelper(Level level, BlockEntityType<T> type, BlockEntityType<? extends ReflectionChamberEntity> type2) {
+        return createTickerHelper(type, type2, ReflectionChamberEntity::tick);
+    }
+
     public ReflectionChamberEntity getEntity(BlockState state, Level level, BlockPos pos) {
         return (ReflectionChamberEntity) level.getBlockEntity(pos);
     }
+
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
@@ -39,12 +46,9 @@ public class ReflectionChamberBlock extends BaseEntityBlock implements IBeamHand
         ReflectionChamberEntity entity = getEntity(level.getBlockState(pos), level, pos);
         entity.onBeam(beam);
     }
+
     @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
-        return level.isClientSide ? null : createTickerHelper(level,type, ModBlockEntities.REFLECTION_CHAMBER.get());
-    }
-    @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createTickerHelper(Level level,BlockEntityType<T> type, BlockEntityType<? extends ReflectionChamberEntity> type2){
-        return createTickerHelper(type, type2, ReflectionChamberEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return level.isClientSide ? null : createTickerHelper(level, type, ModBlockEntities.REFLECTION_CHAMBER.get());
     }
 }

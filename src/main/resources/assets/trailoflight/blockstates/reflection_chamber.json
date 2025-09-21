@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "trailoflight:block/reflection_chamber" }
+    "": {
+      "model": "trailoflight:block/reflection_chamber"
+    }
   }
 }

@@ -2,12 +2,12 @@ package pers.notyourd3.trailoflight.feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.Level;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class BeamCodec {
     public static final Codec<Color> COLOR_CODEC = RecordCodecBuilder.create(builder -> builder.group(

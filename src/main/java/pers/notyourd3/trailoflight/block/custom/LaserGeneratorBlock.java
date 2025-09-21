@@ -20,11 +20,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.block.entity.custom.LaserGeneratorEntity;
-import pers.notyourd3.trailoflight.feature.Beam;
 
 import java.awt.*;
 
@@ -36,14 +34,14 @@ public class LaserGeneratorBlock extends AbstractGeneratorBlock {
         super(p_49224_);
     }
 
-    @Override
-    public Color getBeamColor() {
-        return new Color(255,0,0,16);
-    }
-
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createTickerHelper(Level level, BlockEntityType<T> type, BlockEntityType<? extends LaserGeneratorEntity> type2) {
         return createTickerHelper(type, type2, LaserGeneratorEntity::tick);
+    }
+
+    @Override
+    public Color getBeamColor() {
+        return new Color(255, 0, 0, 16);
     }
 
     public LaserGeneratorEntity getEntity(Level level, BlockPos pos) {
@@ -84,8 +82,8 @@ public class LaserGeneratorBlock extends AbstractGeneratorBlock {
         }
         LaserGeneratorEntity entity = getEntity(level, pos);
         int burnTime = stack.getBurnTime(RecipeType.SMELTING, level.fuelValues());
-        if (burnTime > 0) {
-            entity.addFuel(burnTime/5);
+        if (burnTime > 0 && stack.getCraftingRemainder() == ItemStack.EMPTY) {
+            entity.addFuel(burnTime / 5);
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
             }

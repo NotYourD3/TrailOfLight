@@ -2,34 +2,31 @@ package pers.notyourd3.trailoflight.client.render;
 
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.platform.DepthTestFunction;
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.Util;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import org.joml.Matrix4f;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 import static net.minecraft.client.renderer.RenderPipelines.ENTITY_SNIPPET;
-import static net.minecraft.client.renderer.RenderPipelines.MATRICES_PROJECTION_SNIPPET;
 import static pers.notyourd3.trailoflight.Trailoflight.MODID;
 
 
@@ -38,24 +35,64 @@ public class LaserRenderer {
     public RenderType LASER_TYPE = RenderType.create("celestial", 1536, false, false,
             RenderPipeline.builder(ENTITY_SNIPPET)
                     .withLocation(ResourceLocation.fromNamespaceAndPath(MODID, "pipeline/laser"))
-                    .withVertexShader(ResourceLocation.fromNamespaceAndPath(MODID,"core/position_tex_color"))
-                    .withFragmentShader(ResourceLocation.fromNamespaceAndPath(MODID,"core/position_tex_color"))
+                    .withVertexShader(ResourceLocation.fromNamespaceAndPath(MODID, "core/position_tex_color"))
+                    .withFragmentShader(ResourceLocation.fromNamespaceAndPath(MODID, "core/position_tex_color"))
                     .withSampler("Sampler0").withBlend(BlendFunction.TRANSLUCENT).withDepthWrite(false)
                     .withCull(false)
                     .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
                     .build()
-    , RenderType.CompositeState.builder()
-                    .setTextureState(new RenderStateShard.TextureStateShard(ResourceLocation.fromNamespaceAndPath(MODID, "textures/misc/laser.png"), false)).createCompositeState(false));;
+            , RenderType.CompositeState.builder()
+                    .setTextureState(new RenderStateShard.TextureStateShard(ResourceLocation.fromNamespaceAndPath(MODID, "textures/misc/laser.png"), false)).createCompositeState(false));
+    ;
     Set<LaserRenderInfo> lasers = new HashSet<>();
+
+    private static void drawLaser(VertexConsumer consumer, Matrix4f matrix, Vec3 start, Vec3 end, Color color) {
+        int alpha = Math.max(50, color.getAlpha());
+        int addColorMin = 30 * alpha / 255;
+        color = new Color(Math.max(addColorMin, color.getRed()), Math.max(addColorMin, color.getGreen()), Math.max(addColorMin, color.getBlue()), alpha);
+        double width = (0.25 * (double) color.getAlpha() / 255D) / 2.0;
+        Vec3 d = new Vec3(0, width, 0);
+        Vec3 d2 = new Vec3(width, 0, 0);
+        Vec3 d3 = new Vec3(0, 0, width);
+
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+        int a = color.getAlpha();
+
+        float vMin = 0, vMax = 1;
+        float uMin = 0, uMax = 1;
+
+        pos(consumer, matrix, start.add(d)).setColor(r, g, b, a).setUv(uMin, vMin);
+        pos(consumer, matrix, start.subtract(d)).setColor(r, g, b, a).setUv(uMin, vMax);
+        pos(consumer, matrix, end.subtract(d)).setColor(r, g, b, a).setUv(uMax, vMax);
+        pos(consumer, matrix, end.add(d)).setColor(r, g, b, a).setUv(uMax, vMin);
+
+        pos(consumer, matrix, start.add(d2)).setColor(r, g, b, a).setUv(uMin, vMin);
+        pos(consumer, matrix, start.subtract(d2)).setColor(r, g, b, a).setUv(uMin, vMax);
+        pos(consumer, matrix, end.subtract(d2)).setColor(r, g, b, a).setUv(uMax, vMax);
+        pos(consumer, matrix, end.add(d2)).setColor(r, g, b, a).setUv(uMax, vMin);
+
+        pos(consumer, matrix, start.add(d3)).setColor(r, g, b, a).setUv(uMin, vMin);
+        pos(consumer, matrix, start.subtract(d3)).setColor(r, g, b, a).setUv(uMin, vMax);
+        pos(consumer, matrix, end.subtract(d3)).setColor(r, g, b, a).setUv(uMax, vMax);
+        pos(consumer, matrix, end.add(d3)).setColor(r, g, b, a).setUv(uMax, vMin);
+    }
+
+    private static VertexConsumer pos(VertexConsumer consumer, Matrix4f matrix, Vec3 pos) {
+        return consumer.addVertex(matrix, (float) pos.x, (float) pos.y, (float) pos.z).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(0, 1, 0);
+    }
+
     @SubscribeEvent
-    public void load(LevelEvent.Load event){
+    public void load(LevelEvent.Load event) {
         lasers.clear();
     }
 
     @SubscribeEvent
-    public void unload(LevelEvent.Unload event){
+    public void unload(LevelEvent.Unload event) {
         lasers.clear();
     }
+
     @SubscribeEvent
     public void onRenderWorldLast(RenderLevelStageEvent.AfterTranslucentBlocks event) {
         PoseStack ps = event.getPoseStack();
@@ -72,52 +109,18 @@ public class LaserRenderer {
         }
         ps.popPose();
     }
+
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent.Pre event){
+    public void onClientTick(ClientTickEvent.Pre event) {
         Iterator<LaserRenderInfo> iterator = lasers.iterator();
         while (iterator.hasNext()) {
             LaserRenderInfo laser = iterator.next();
-            if (laser.flag>0) {
+            if (laser.flag > 0) {
                 laser.flag--;
             } else {
                 iterator.remove();
             }
         }
-    }
-    private static void drawLaser(VertexConsumer consumer, Matrix4f matrix, Vec3 start, Vec3 end, Color color) {
-        int alpha = Math.max(50, color.getAlpha());
-        int addColorMin = 30 * alpha/255;
-        color = new Color(Math.max(addColorMin, color.getRed()), Math.max(addColorMin, color.getGreen()), Math.max(addColorMin, color.getBlue()), alpha);
-        double width = (0.25 * (double) color.getAlpha() / 255D) / 2.0;
-        Vec3 d = new Vec3(0, width, 0);
-        Vec3 d2 = new Vec3(width, 0, 0);
-        Vec3 d3 = new Vec3(0, 0, width);
-
-        int r = color.getRed();
-        int g = color.getGreen();
-        int b = color.getBlue();
-        int a = color.getAlpha();
-
-        float vMin = 0, vMax = 1;
-        float uMin = 0, uMax = 1;
-
-        pos(consumer, matrix, start.add(d)).setColor(r, g, b, a).setUv(uMin,vMin);
-        pos(consumer, matrix, start.subtract(d)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.subtract(d)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.add(d)).setColor(r, g, b, a).setUv(uMax,vMin);
-
-        pos(consumer, matrix, start.add(d2)).setColor(r, g, b, a).setUv(uMin,vMin);
-        pos(consumer, matrix, start.subtract(d2)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.subtract(d2)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.add(d2)).setColor(r, g, b, a).setUv(uMax,vMin);
-
-        pos(consumer, matrix, start.add(d3)).setColor(r, g, b, a).setUv(uMin,vMin);
-        pos(consumer, matrix, start.subtract(d3)).setColor(r, g, b, a).setUv(uMin,vMax);
-        pos(consumer, matrix, end.subtract(d3)).setColor(r, g, b, a).setUv(uMax,vMax);
-        pos(consumer, matrix, end.add(d3)).setColor(r, g, b, a).setUv(uMax,vMin);
-    }
-    private static VertexConsumer pos(VertexConsumer consumer,Matrix4f matrix,Vec3 pos){
-        return consumer.addVertex(matrix,(float) pos.x, (float) pos.y, (float) pos.z).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(0,1,0);
     }
 
     public void addLaser(Vec3 start, Vec3 end, Color color) {
@@ -133,12 +136,15 @@ public class LaserRenderer {
             lasers.add(newLaser);
         }
     }
+
     public void removeLaser(Vec3 start, Vec3 end, Color color) {
         lasers.remove(new LaserRenderInfo(start, end, color));
     }
+
     public void clearLasers() {
         lasers.clear();
     }
+
     public static class LaserRenderInfo {
         public Vec3 start, end;
         public Color color;

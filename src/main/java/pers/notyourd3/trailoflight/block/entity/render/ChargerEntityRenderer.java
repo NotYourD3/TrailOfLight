@@ -16,22 +16,23 @@ import pers.notyourd3.trailoflight.block.entity.custom.ChargerEntity;
 public class ChargerEntityRenderer implements BlockEntityRenderer<ChargerEntity> {
     public ChargerEntityRenderer(BlockEntityRendererProvider.Context context) {
     }
+
     @Override
     public void render(ChargerEntity chargerEntity, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1, Vec3 vec3) {
         ItemStack stack = chargerEntity.getStack();
         Level level = chargerEntity.getLevel();
         long gametime = level != null ? level.getGameTime() : 0;
         float rotation = gametime % 360;
-        if(!stack.isEmpty()){
+        if (!stack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.translate(0.5,1.2,0.5);
+            poseStack.translate(0.5, 1.2, 0.5);
             poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             /*
             BakedModel bakedModel = itemRenderer.getModel(stack,level,null,0);
             itemRenderer.render(stack, ItemDisplayContext.FIXED,true,pPoseStack,pBuffer,pPackedLight,pPackedOverlay,bakedModel);
              */
-            itemRenderer.renderStatic(stack,ItemDisplayContext.FIXED,i,i1,poseStack,multiBufferSource,chargerEntity.getLevel(),1);
+            itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, i, i1, poseStack, multiBufferSource, chargerEntity.getLevel(), 1);
             poseStack.popPose();
         }
     }

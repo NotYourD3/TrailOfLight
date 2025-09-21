@@ -2,7 +2,6 @@ package pers.notyourd3.trailoflight.recipe;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import pers.notyourd3.trailoflight.Trailoflight;
@@ -17,6 +16,7 @@ public class ModRecipeSerializers {
 
     public static final Supplier<RecipeSerializer<BeamRecipe>> BEAM =
             RECIPE_SERIALIZERS.register("beam", BeamRecipeSerializer::new);
+
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
     }

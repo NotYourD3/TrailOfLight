@@ -2,6 +2,7 @@ package pers.notyourd3.trailoflight.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,6 +36,7 @@ public class ChargerBlock extends BaseEntityBlock implements IBeamHandler {
     public ChargerEntity getEntity(Level level, BlockPos pos) {
         return (ChargerEntity) level.getBlockEntity(pos);
     }
+
 
     @Nullable
     @Override
@@ -67,5 +70,18 @@ public class ChargerBlock extends BaseEntityBlock implements IBeamHandler {
     public void onBeam(Level level, BlockPos pos, Beam beam) {
         ChargerEntity entity = getEntity(level, pos);
         entity.onBeam(beam);
+    }
+    
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        ChargerEntity entity = getEntity(level, pos);
+            ItemStack stack = entity.getStack();
+            if (!stack.isEmpty()) {
+                ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+                itemEntity.setDefaultPickUpDelay();
+                level.addFreshEntity(itemEntity);
+            }
+
+        return super.playerWillDestroy(level, pos, state, player);
     }
 }

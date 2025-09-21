@@ -12,14 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import pers.notyourd3.trailoflight.feature.BeamCodec;
 
 public class BeamRecipeSerializer implements RecipeSerializer<BeamRecipe> {
-    public static MapCodec<BeamRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            BeamCodec.COLOR_CODEC.fieldOf("color_min").forGetter(BeamRecipe::getColorMin),
-            BeamCodec.COLOR_CODEC.fieldOf("color_max").forGetter(BeamRecipe::getColorMax),
-            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(BeamRecipe::getInputItem),
-            Codec.INT.fieldOf("alpha").forGetter(BeamRecipe::getAlpha),
-            ItemStack.CODEC.fieldOf("result").forGetter(BeamRecipe::getResult)
-    ).apply(inst, BeamRecipe::new));
-    public static final StreamCodec<RegistryFriendlyByteBuf,BeamRecipe> STREAM_CODEC =
+    public static final StreamCodec<RegistryFriendlyByteBuf, BeamRecipe> STREAM_CODEC =
             StreamCodec.composite(
                     BeamCodec.COLOR_STREAM_CODEC, BeamRecipe::getColorMin,
                     BeamCodec.COLOR_STREAM_CODEC, BeamRecipe::getColorMax,
@@ -28,6 +21,13 @@ public class BeamRecipeSerializer implements RecipeSerializer<BeamRecipe> {
                     ItemStack.STREAM_CODEC, BeamRecipe::getResult,
                     BeamRecipe::new
             );
+    public static MapCodec<BeamRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+            BeamCodec.COLOR_CODEC.fieldOf("color_min").forGetter(BeamRecipe::getColorMin),
+            BeamCodec.COLOR_CODEC.fieldOf("color_max").forGetter(BeamRecipe::getColorMax),
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(BeamRecipe::getInputItem),
+            Codec.INT.fieldOf("alpha").forGetter(BeamRecipe::getAlpha),
+            ItemStack.CODEC.fieldOf("result").forGetter(BeamRecipe::getResult)
+    ).apply(inst, BeamRecipe::new));
 
     @Override
     public MapCodec<BeamRecipe> codec() {

@@ -18,38 +18,46 @@ public class BeamRecipe implements Recipe<BeamRecipeInput> {
     private final List<Ingredient> inputItem;
     private final int alpha;
     private final ItemStack result;
-    public BeamRecipe(Color colorMin, Color colorMax, List<Ingredient> inputItem, int alpha, ItemStack result){
+
+    public BeamRecipe(Color colorMin, Color colorMax, List<Ingredient> inputItem, int alpha, ItemStack result) {
         this.colorMin = colorMin;
         this.colorMax = colorMax;
         this.inputItem = inputItem;
         this.alpha = alpha;
         this.result = result;
     }
+
     public List<Ingredient> getInputItem() {
         return inputItem;
     }
+
     public Color getColorMin() {
         return colorMin;
     }
+
     public Color getColorMax() {
         return colorMax;
     }
+
     public int getAlpha() {
         return alpha;
     }
+
     public ItemStack getResult() {
         return result;
     }
+
     @Override
     public boolean matches(BeamRecipeInput input, Level level) {
-        if(input.size() != inputItem.size())return false;
-        return input.beam().isInRange(colorMin, colorMax) && RecipeMatcher.findMatches(input.items(), this.inputItem) != null && input.alpha()>=alpha;
+        if (input.size() != inputItem.size()) return false;
+        return input.beam().isInRange(colorMin, colorMax) && RecipeMatcher.findMatches(input.items(), this.inputItem) != null && input.alpha() >= alpha;
     }
 
     @Override
     public ItemStack assemble(BeamRecipeInput beamRecipeInput, HolderLookup.Provider provider) {
         return result.copy();
     }
+
     @Override
     public boolean isSpecial() {
         return true;

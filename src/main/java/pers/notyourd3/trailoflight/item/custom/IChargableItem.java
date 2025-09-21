@@ -9,8 +9,6 @@ import java.awt.*;
 public interface IChargableItem {
 
 
-    int getMaxAlpha();
-
     static void addBeam(ItemStack stack, Beam beam) {
         int maxAlpha;
         if (stack.getItem() instanceof IChargableItem chargableItem) {
@@ -27,9 +25,9 @@ public interface IChargableItem {
                     if (newAlpha == 0) {
                         return new ModDataComponents.BeamStorageInfoRecord(new Color(0, 0, 0, 0), 0, maxAlpha);
                     }
-                    int newRed = (int) (((long)data.alpha() * data.color().getRed() + (long)beam.color.getAlpha() * beam.color.getRed()) / newAlpha);
-                    int newGreen = (int) (((long)data.alpha() * data.color().getGreen() + (long)beam.color.getAlpha() * beam.color.getGreen()) / newAlpha);
-                    int newBlue = (int) (((long)data.alpha() * data.color().getBlue() + (long)beam.color.getAlpha() * beam.color.getBlue()) / newAlpha);
+                    int newRed = (int) (((long) data.alpha() * data.color().getRed() + (long) beam.color.getAlpha() * beam.color.getRed()) / newAlpha);
+                    int newGreen = (int) (((long) data.alpha() * data.color().getGreen() + (long) beam.color.getAlpha() * beam.color.getGreen()) / newAlpha);
+                    int newBlue = (int) (((long) data.alpha() * data.color().getBlue() + (long) beam.color.getAlpha() * beam.color.getBlue()) / newAlpha);
                     if (newAlpha > data.maxAlpha()) {
                         newAlpha = data.maxAlpha();
                     }
@@ -57,6 +55,7 @@ public interface IChargableItem {
                 }
         );
     }
+
     static Color getBeamColor(ItemStack stack) {
         ModDataComponents.BeamStorageInfoRecord data = stack.get(ModDataComponents.BEAM_STORAGE_INFO.get());
         if (data == null) {
@@ -64,6 +63,7 @@ public interface IChargableItem {
         }
         return data.color();
     }
+
     static int getAlpha(ItemStack stack) {
         ModDataComponents.BeamStorageInfoRecord data = stack.get(ModDataComponents.BEAM_STORAGE_INFO.get());
         if (data == null) {
@@ -71,5 +71,7 @@ public interface IChargableItem {
         }
         return data.alpha();
     }
+
+    int getMaxAlpha();
 
 }

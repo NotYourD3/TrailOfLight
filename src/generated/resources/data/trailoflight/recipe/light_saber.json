@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:blaze_rod",
+    "G": "trailoflight:glittering_ingot"
+  },
+  "pattern": [
+    " G ",
+    " G ",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:light_saber"
+  }
+}

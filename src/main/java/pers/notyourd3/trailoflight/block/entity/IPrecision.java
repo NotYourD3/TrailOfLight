@@ -8,9 +8,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface IPrecision {
     float getRotX(Level level, BlockPos pos);
+
     float getRotY(Level level, BlockPos pos);
+
     void setRotX(Level level, BlockPos pos, float rotX);
+
     void setRotY(Level level, BlockPos pos, float rotY);
+
     default void adjust(Level worldIn, BlockPos pos, ItemStack stack, boolean sneaking, Direction side) {
         BlockState state = worldIn.getBlockState(pos);
         if (state.getBlock() instanceof IPrecision && !worldIn.isClientSide()) {
@@ -23,6 +27,7 @@ public interface IPrecision {
             }
         }
     }
+
     final class Helper {
 
         public static final String MODE_TAG = "mode";

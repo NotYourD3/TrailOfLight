@@ -16,16 +16,16 @@ public class ScrewDriverItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if(!context.getLevel().isClientSide()){
-        ItemStack stack = context.getItemInHand();
+        if (!context.getLevel().isClientSide()) {
+            ItemStack stack = context.getItemInHand();
 
-        BlockState state = context.getLevel().getBlockState(context.getClickedPos());
-        Block block = state.getBlock();
+            BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+            Block block = state.getBlock();
 
 
-        if (block instanceof IPrecision) {
-            ((IPrecision) block).adjust(context.getLevel(), context.getClickedPos(), stack, context.getPlayer().isCrouching(), context.getClickedFace());
-        }
+            if (block instanceof IPrecision) {
+                ((IPrecision) block).adjust(context.getLevel(), context.getClickedPos(), stack, context.getPlayer().isCrouching(), context.getClickedFace());
+            }
         }
         return InteractionResult.SUCCESS;
     }

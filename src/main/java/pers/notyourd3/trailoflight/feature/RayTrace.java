@@ -94,7 +94,7 @@ public class RayTrace {
             Entity targetEntity = null;
             Vec3 locationTmp = null;
             AABB bb = new AABB(origin.x, origin.y, origin.z, lookVec.x, lookVec.y, lookVec.z);
-            List<Entity> list = world.getEntities((Entity)null, bb.expandTowards(range, range, range), input -> {
+            List<Entity> list = world.getEntities((Entity) null, bb.expandTowards(range, range, range), input -> {
                 if (predicate == null) return true;
                 else return predicate.test(input);
             });
@@ -121,14 +121,14 @@ public class RayTrace {
         }
 
         blockResult = traceBlock(origin, lookVec);
-        if ( blockResult == null)
+        if (blockResult == null)
             blockResult = new BlockHitResult(
                     lookVec,
                     getDirectionFromVector(lookVec),
                     BlockPos.containing(lookVec),
                     false);
 
-        return ( entityResult != null && origin.distanceTo(entityResult.getLocation()) < origin.distanceTo(blockResult.getLocation())) ? entityResult : blockResult;
+        return (entityResult != null && origin.distanceTo(entityResult.getLocation()) < origin.distanceTo(blockResult.getLocation())) ? entityResult : blockResult;
     }
 
     private HitResult traceBlock(@Nonnull Vec3 start, @Nonnull Vec3 end) {
@@ -235,7 +235,6 @@ public class RayTrace {
             Block targetBlock = targetState.getBlock();
 
 
-
             if (!isOrigin(targetPos)) {
                 if (skipBlockList.contains(targetPos) || (predicateBlock != null && !predicateBlock.test(targetBlock))) {
                     continue;
@@ -260,7 +259,7 @@ public class RayTrace {
         if (returnLastUncollidableBlock && lastUncollidablePos != null) {
 
             return new BlockHitResult(new Vec3(lastUncollidablePos.getX(), lastUncollidablePos.getY(), lastUncollidablePos.getZ()),
-                    getDirectionFromVector( start),
+                    getDirectionFromVector(start),
                     lastUncollidablePos,
                     false);
         }
@@ -268,10 +267,11 @@ public class RayTrace {
 
         return null;
     }
+
     public Direction getDirectionFromVector(Vec3 vec) {
-        float absX = Math.abs((float)vec.x);
-        float absY = Math.abs((float)vec.y);
-        float absZ = Math.abs((float)vec.z);
+        float absX = Math.abs((float) vec.x);
+        float absY = Math.abs((float) vec.y);
+        float absZ = Math.abs((float) vec.z);
 
         if (absX > absY && absX > absZ) {
             return vec.x > 0 ? Direction.EAST : Direction.WEST;

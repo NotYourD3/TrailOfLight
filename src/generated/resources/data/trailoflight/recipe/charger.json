@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "trailoflight:lambent_powder",
+    "G": "minecraft:gray_concrete"
+  },
+  "pattern": [
+    "   ",
+    "GGG",
+    "GAG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:charger"
+  }
+}

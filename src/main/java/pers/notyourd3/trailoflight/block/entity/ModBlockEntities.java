@@ -1,22 +1,16 @@
 package pers.notyourd3.trailoflight.block.entity;
 
-import net.minecraft.Util;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import pers.notyourd3.trailoflight.Trailoflight;
 import pers.notyourd3.trailoflight.block.ModBlocks;
 import pers.notyourd3.trailoflight.block.entity.custom.*;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Set;
 
 import static pers.notyourd3.trailoflight.Trailoflight.MODID;
@@ -24,16 +18,7 @@ import static pers.notyourd3.trailoflight.Trailoflight.MODID;
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MagnifierEntity>> MAGNIFIER =
-            registerEntity("magnifier", MagnifierEntity::new, ModBlocks.MAGNIFIER);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MirrorEntity>> MIRROR =
-            registerEntity("mirror", MirrorEntity::new, ModBlocks.MIRROR);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ReflectionChamberEntity>> REFLECTION_CHAMBER =
-            registerEntity("reflection_chamber", ReflectionChamberEntity::new, ModBlocks.REFLECTION_CHAMBER);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserGeneratorEntity> > LASER_GENERATOR =
-            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ChargerEntity> > CHARGER =
-            registerEntity("charger", ChargerEntity::new, ModBlocks.CHARGER);
+
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends T>> registerEntity(
             String name, BlockEntityType.BlockEntitySupplier<? extends T> supplier, DeferredHolder<Block, ?>... blocks
     ) {
@@ -42,8 +27,21 @@ public class ModBlockEntities {
                         Set.copyOf(Arrays.stream(blocks).map(DeferredHolder::get).toList())
                 )
         );
-    }
-    public static void register(IEventBus eventBus){
+    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MagnifierEntity>> MAGNIFIER =
+            registerEntity("magnifier", MagnifierEntity::new, ModBlocks.MAGNIFIER);
+
+    public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
-    }
+    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MirrorEntity>> MIRROR =
+            registerEntity("mirror", MirrorEntity::new, ModBlocks.MIRROR);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ReflectionChamberEntity>> REFLECTION_CHAMBER =
+            registerEntity("reflection_chamber.json", ReflectionChamberEntity::new, ModBlocks.REFLECTION_CHAMBER);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserGeneratorEntity>> LASER_GENERATOR =
+            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ChargerEntity>> CHARGER =
+            registerEntity("charger", ChargerEntity::new, ModBlocks.CHARGER);
+
+
+
+
 }

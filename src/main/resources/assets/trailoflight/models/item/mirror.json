@@ -1,3 +1,6 @@
 {
-  "parent": "trailoflight:block/mirror"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "trailoflight:item/mirror"
+  }
 }

@@ -13,13 +13,14 @@ import pers.notyourd3.trailoflight.item.custom.IChargableItem;
 public class ItemMixin {
     @Inject(method = "isBarVisible", at = @At("HEAD"), cancellable = true)
     public void onisBarVisible(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if(stack.getItem() instanceof IChargableItem){
+        if (stack.getItem() instanceof IChargableItem) {
             cir.setReturnValue(true);
         }
     }
+
     @Inject(method = "getBarWidth", at = @At("HEAD"), cancellable = true)
     public void ongetBarWidth(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
-        if(stack.getItem() instanceof IChargableItem){
+        if (stack.getItem() instanceof IChargableItem) {
             ModDataComponents.BeamStorageInfoRecord data = stack.get(ModDataComponents.BEAM_STORAGE_INFO.get());
             if (data == null || data.alpha() <= 0) {
                 cir.setReturnValue(0);
@@ -29,9 +30,10 @@ public class ItemMixin {
             }
         }
     }
+
     @Inject(method = "getBarColor", at = @At("HEAD"), cancellable = true)
     public void ongetBarColor(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
-        if(stack.getItem() instanceof IChargableItem){
+        if (stack.getItem() instanceof IChargableItem) {
             ModDataComponents.BeamStorageInfoRecord data = stack.get(ModDataComponents.BEAM_STORAGE_INFO.get());
             if (data == null || data.alpha() <= 0) {
                 cir.setReturnValue(0);

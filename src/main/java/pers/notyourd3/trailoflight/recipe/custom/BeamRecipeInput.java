@@ -6,7 +6,7 @@ import pers.notyourd3.trailoflight.feature.Beam;
 
 import java.util.List;
 
-public record BeamRecipeInput(Beam beam, List<ItemStack> items,int alpha) implements RecipeInput {
+public record BeamRecipeInput(Beam beam, List<ItemStack> items, int alpha) implements RecipeInput {
     @Override
     public ItemStack getItem(int i) {
         return items.get(i);

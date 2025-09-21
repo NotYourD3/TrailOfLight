@@ -13,11 +13,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.Nullable;
-import pers.notyourd3.trailoflight.feature.Beam;
 
-import java.util.List;
 import java.awt.*;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BeamRecipeBuilder implements RecipeBuilder {
@@ -30,7 +29,7 @@ public class BeamRecipeBuilder implements RecipeBuilder {
 
     // 构造函数通常接受结果 ItemStack。
     // 另外，也可以使用静态构建器方法。
-    public BeamRecipeBuilder(ItemStack result,List<Ingredient> input, Color colorMin, Color colorMax, int alpha) {
+    public BeamRecipeBuilder(ItemStack result, List<Ingredient> input, Color colorMin, Color colorMax, int alpha) {
         this.result = result;
         this.input = input;
         this.colorMin = colorMin;
@@ -58,6 +57,7 @@ public class BeamRecipeBuilder implements RecipeBuilder {
     public Item getResult() {
         return this.result.getItem();
     }
+
     @Override
     public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
         Advancement.Builder advancement = recipeOutput.advancement()

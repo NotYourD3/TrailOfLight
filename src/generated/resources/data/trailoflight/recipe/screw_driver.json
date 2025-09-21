@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:honeycomb",
+    "B": "minecraft:stick",
+    "C": "minecraft:green_dye",
+    "D": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "  D",
+    "AD ",
+    "BC "
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:screw_driver"
+  }
+}

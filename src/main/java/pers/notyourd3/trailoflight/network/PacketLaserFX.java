@@ -13,10 +13,11 @@ import pers.notyourd3.trailoflight.client.render.LaserRenderer;
 import java.awt.*;
 
 public class PacketLaserFX implements CustomPacketPayload, IPayloadHandler<PacketLaserFX> {
-    public static final CustomPacketPayload.Type<PacketLaserFX> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Trailoflight.MODID,"laser_fx"));
+    public static final CustomPacketPayload.Type<PacketLaserFX> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(Trailoflight.MODID, "laser_fx"));
     public static final StreamCodec<FriendlyByteBuf, PacketLaserFX> STREAM_CODEC = CustomPacketPayload.codec(PacketLaserFX::write, PacketLaserFX::new);
-    private double x1,y1,z1,x2,y2,z2;
-    private int r,g,b,a;
+    private double x1, y1, z1, x2, y2, z2;
+    private int r, g, b, a;
+
     public PacketLaserFX(Vec3 start, Vec3 end, Color color) {
         this.x1 = start.x;
         this.y1 = start.y;
@@ -29,12 +30,14 @@ public class PacketLaserFX implements CustomPacketPayload, IPayloadHandler<Packe
         this.b = color.getBlue();
         this.a = color.getAlpha();
     }
-    public PacketLaserFX(FriendlyByteBuf buf){
-        this(new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble()),
-                new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble()),
-                new Color(buf.readInt(),buf.readInt(),buf.readInt(),buf.readInt()));
+
+    public PacketLaserFX(FriendlyByteBuf buf) {
+        this(new Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble()),
+                new Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble()),
+                new Color(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt()));
     }
-    public void write(FriendlyByteBuf buf){
+
+    public void write(FriendlyByteBuf buf) {
         buf.writeDouble(x1);
         buf.writeDouble(y1);
         buf.writeDouble(z1);
@@ -54,10 +57,10 @@ public class PacketLaserFX implements CustomPacketPayload, IPayloadHandler<Packe
 
     @Override
     public void handle(PacketLaserFX message, IPayloadContext context) {
-        if(context.flow().isClientbound()){
-            LaserRenderer.INSTANCE.addLaser(new Vec3(message.x1,message.y1,message.z1),
-                    new Vec3(message.x2,message.y2,message.z2),
-                    new Color(message.r,message.g,message.b,message.a));
+        if (context.flow().isClientbound()) {
+            LaserRenderer.INSTANCE.addLaser(new Vec3(message.x1, message.y1, message.z1),
+                    new Vec3(message.x2, message.y2, message.z2),
+                    new Color(message.r, message.g, message.b, message.a));
         }
     }
 }
