@@ -19,6 +19,7 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
 
+    @SafeVarargs
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends T>> registerEntity(
             String name, BlockEntityType.BlockEntitySupplier<? extends T> supplier, DeferredHolder<Block, ?>... blocks
     ) {
@@ -27,21 +28,28 @@ public class ModBlockEntities {
                         Set.copyOf(Arrays.stream(blocks).map(DeferredHolder::get).toList())
                 )
         );
-    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MagnifierEntity>> MAGNIFIER =
+    }
+    
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MagnifierEntity>> MAGNIFIER =
             registerEntity("magnifier", MagnifierEntity::new, ModBlocks.MAGNIFIER);
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MirrorEntity>> MIRROR =
+            registerEntity("mirror", MirrorEntity::new, ModBlocks.MIRROR);
+            
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ReflectionChamberEntity>> REFLECTION_CHAMBER =
+            registerEntity("reflection_chamber", ReflectionChamberEntity::new, ModBlocks.REFLECTION_CHAMBER);
+            
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserGeneratorEntity>> LASER_GENERATOR =
+            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR);
+            
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ChargerEntity>> CHARGER =
+            registerEntity("charger", ChargerEntity::new, ModBlocks.CHARGER);
+            
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends PrismBlockEntity>> PRISM =
+            registerEntity("prism", PrismBlockEntity::new, ModBlocks.PRISM);
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
-    }    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends MirrorEntity>> MIRROR =
-            registerEntity("mirror", MirrorEntity::new, ModBlocks.MIRROR);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ReflectionChamberEntity>> REFLECTION_CHAMBER =
-            registerEntity("reflection_chamber.json", ReflectionChamberEntity::new, ModBlocks.REFLECTION_CHAMBER);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserGeneratorEntity>> LASER_GENERATOR =
-            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ChargerEntity>> CHARGER =
-            registerEntity("charger", ChargerEntity::new, ModBlocks.CHARGER);
-
-
-
+    }
 
 }

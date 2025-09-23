@@ -2,7 +2,6 @@ package pers.notyourd3.trailoflight.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -11,13 +10,12 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import pers.notyourd3.trailoflight.block.entity.IBeamHandler;
+import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.block.entity.custom.ChargerEntity;
 import pers.notyourd3.trailoflight.feature.Beam;
 

@@ -50,7 +50,7 @@ public class LaserGeneratorBlock extends AbstractGeneratorBlock {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override

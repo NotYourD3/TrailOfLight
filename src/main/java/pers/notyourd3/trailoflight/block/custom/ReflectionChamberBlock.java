@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import pers.notyourd3.trailoflight.block.entity.IBeamHandler;
+import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.block.entity.custom.ReflectionChamberEntity;
 import pers.notyourd3.trailoflight.feature.Beam;

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import pers.notyourd3.trailoflight.block.entity.ILaserTrace;
+import pers.notyourd3.trailoflight.block.ILaserTrace;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;

@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import pers.notyourd3.trailoflight.block.entity.IPrecision;
+import pers.notyourd3.trailoflight.block.IPrecision;
 
 
 public class ScrewDriverItem extends Item {

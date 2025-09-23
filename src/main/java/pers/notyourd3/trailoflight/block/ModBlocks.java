@@ -63,6 +63,13 @@ public class ModBlocks {
                     .mapColor(MapColor.METAL)
                     .strength(5.0F)
                     .noOcclusion()));
+    
+    public static final DeferredBlock<Block> PRISM = registerBlock("prism",
+            () -> new PrismBlock(Block.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "prism")))
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F)
+                    .noOcclusion()));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

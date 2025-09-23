@@ -12,7 +12,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
-import pers.notyourd3.trailoflight.block.entity.IBeamHandler;
+import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.network.PacketLaserFX;
 import pers.notyourd3.trailoflight.recipe.ModRecipeTypes;
 import pers.notyourd3.trailoflight.recipe.custom.BeamRecipe;
@@ -108,5 +108,6 @@ public class Beam {
     public Beam createSimilarBeam(Vec3 slope) {
         return new Beam(endLoc, slope, level, color).increaseLife();
     }
+
 
 }

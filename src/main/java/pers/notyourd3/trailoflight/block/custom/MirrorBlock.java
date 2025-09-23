@@ -23,9 +23,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import pers.notyourd3.trailoflight.block.entity.IBeamHandler;
-import pers.notyourd3.trailoflight.block.entity.ILaserTrace;
-import pers.notyourd3.trailoflight.block.entity.IPrecision;
+import pers.notyourd3.trailoflight.block.IBeamHandler;
+import pers.notyourd3.trailoflight.block.ILaserTrace;
+import pers.notyourd3.trailoflight.block.IPrecision;
 import pers.notyourd3.trailoflight.block.entity.custom.MirrorEntity;
 import pers.notyourd3.trailoflight.feature.Beam;
 import pers.notyourd3.trailoflight.feature.Matrix4;
@@ -119,20 +119,13 @@ public class MirrorBlock extends BaseEntityBlock implements ILaserTrace, IBeamHa
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (!level.isClientSide()) {
             float x = 0, y = 0;
-            switch (state.getValue(FACING)) {
-                case WEST:
-                    y = 90;
-                    break;
-                case EAST:
-                    y = 270;
-                    break;
-                case NORTH:
-                    y = 180;
-                    break;
-                case SOUTH:
-                    y = 0;
-                    break;
-            }
+            y = switch (state.getValue(FACING)) {
+                case WEST -> 90;
+                case EAST -> 270;
+                case NORTH -> 0;
+                case SOUTH -> 180;
+                default -> y;
+            };
             getEntity(level, pos).setRotX(x);
             getEntity(level, pos).setRotY(y);
         }
