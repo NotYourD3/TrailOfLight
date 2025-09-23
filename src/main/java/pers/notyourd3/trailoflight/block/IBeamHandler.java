@@ -7,4 +7,5 @@ import pers.notyourd3.trailoflight.feature.Beam;
 
 public interface IBeamHandler {
     void onBeam(Level level, BlockPos pos, Beam beam);
+    default void onBeamRemoved(Level level, BlockPos pos){};
 }

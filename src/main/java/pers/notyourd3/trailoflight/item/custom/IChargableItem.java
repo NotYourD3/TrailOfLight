@@ -31,7 +31,9 @@ public interface IChargableItem {
                     if (newAlpha > data.maxAlpha()) {
                         newAlpha = data.maxAlpha();
                     }
-                    Color newColor = new Color(newRed, newGreen, newBlue);
+                    float[] hsbvals = Color.RGBtoHSB(newRed, newGreen, newBlue, null);
+                    Color color = new Color(Color.HSBtoRGB(hsbvals[0], hsbvals[1], 1));
+                    Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue());
                     return new ModDataComponents.BeamStorageInfoRecord(newColor, newAlpha, data.maxAlpha());
                 }
         );
