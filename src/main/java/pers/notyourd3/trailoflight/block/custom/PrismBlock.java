@@ -22,6 +22,7 @@ import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.block.ILaserTrace;
 import pers.notyourd3.trailoflight.block.entity.custom.PrismBlockEntity;
 import pers.notyourd3.trailoflight.feature.Beam;
+import pers.notyourd3.trailoflight.feature.BeamManager;
 import pers.notyourd3.trailoflight.feature.Matrix4;
 import pers.notyourd3.trailoflight.feature.Tri;
 
@@ -184,7 +185,7 @@ public class PrismBlock extends BaseEntityBlock implements ILaserTrace, IBeamHan
             }
 
             Beam beam1 = new Beam(hitPos, ref, world, color).increaseLife();
-            beam1.spawn();
+            BeamManager.INSTANCE.addBeam(beam1);
         }
     }
 
