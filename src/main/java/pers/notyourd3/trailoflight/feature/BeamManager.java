@@ -27,7 +27,7 @@ public class BeamManager {
         Map<BlockPos, Level> currentTickActivatedBlocks = new HashMap<>();
 
         for (Beam beam : beamsToProcess) {
-            beam.spawn();
+            beam.fire();
             // 假设你的 onBeam 方法会更新一个内部状态，或者你在这里捕捉光线追踪结果
             if (beam.trace instanceof BlockHitResult) {
                 BlockPos pos = BlockPos.containing(beam.endLoc);

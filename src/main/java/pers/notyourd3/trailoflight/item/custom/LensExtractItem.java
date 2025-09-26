@@ -2,9 +2,7 @@ package pers.notyourd3.trailoflight.item.custom;
 
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -18,7 +16,7 @@ public class LensExtractItem extends AbstractLensItem{
 
     @Override
     public void onSpawn(Beam beam){
-        beam.spawnWithFunction((HitResult result) ->{
+        beam.fire((HitResult result) ->{
             if(result instanceof BlockHitResult hit){
                 IItemHandler handler = beam.level.getCapability(Capabilities.ItemHandler.BLOCK,hit.getBlockPos(),hit.getDirection());
                 if(handler != null){
@@ -33,7 +31,7 @@ public class LensExtractItem extends AbstractLensItem{
                                         hit.getLocation().y,
                                         hit.getLocation().z,
                                         extractedStack);
-                                Vec3 motion = beam.initLoc.subtract(hit.getLocation()).normalize().scale(1.5);
+                                Vec3 motion = beam.initLoc.subtract(hit.getLocation()).normalize().scale(0.2);
                                 entity.lerpMotion(motion.x, motion.y, motion.z);
                                 beam.level.addFreshEntity(entity);
                                 break;
@@ -42,11 +40,14 @@ public class LensExtractItem extends AbstractLensItem{
                     }
                 }
             }
-            if(result instanceof EntityHitResult hit){
-                if(hit.getEntity() instanceof ItemEntity entity){
-                    Vec3 motion = beam.initLoc.subtract(hit.getLocation()).normalize().scale(1.5);
-                    entity.lerpMotion(motion.x, motion.y, motion.z);
-                }
+        },entity -> {
+            if (entity == null) return true;
+            return !(entity instanceof ItemEntity);
+        });
+        beam.getEntitiesInRange().forEach(entity -> {
+            if(entity instanceof ItemEntity entity1){
+                Vec3 motion = beam.initLoc.subtract(entity1.position()).normalize().scale(1.5);
+                entity1.lerpMotion(motion.x, motion.y, motion.z);
             }
         });
     }

@@ -15,6 +15,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import pers.notyourd3.trailoflight.block.ModBlocks;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.feature.Beam;
+import pers.notyourd3.trailoflight.feature.BeamManager;
 import pers.notyourd3.trailoflight.item.custom.AbstractLensItem;
 
 import java.awt.*;
@@ -87,7 +88,7 @@ public class LaserEmitterEntity extends BlockEntity {
                 lensItem.onSpawn(beam);
             } else {
                 // 默认发射激光
-                beam.spawn();
+                BeamManager.INSTANCE.addBeam(beam);
             }
         }
     }

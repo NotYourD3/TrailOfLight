@@ -7,10 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.network.PacketDistributor;
 import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.network.PacketLaserFX;
@@ -18,10 +15,13 @@ import pers.notyourd3.trailoflight.recipe.ModRecipeTypes;
 import pers.notyourd3.trailoflight.recipe.custom.BeamRecipe;
 import pers.notyourd3.trailoflight.recipe.custom.BeamRecipeInput;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 
 public class Beam {
@@ -64,48 +64,40 @@ public class Beam {
         return this;
     }
 
-    public void spawn() {
+    public void fire() {
         if (level.isClientSide()) return;
         if (life >= MAX_BOUNCES) return;
-        trace = new RayTrace(level, rotation, initLoc, range)
-                .setEntityFilter(entity -> {
-                    if (entity == null) return true;
-                    if (entityToSkip == null) return true;
-                    return entity.getUUID() != entityToSkip.getUUID();
-                })
-                .trace();
-        if (trace == null) return;
-        this.endLoc = trace.getLocation();
-        if (trace instanceof BlockHitResult) {
-            BlockPos pos = BlockPos.containing(endLoc);
-            BlockState state = level.getBlockState(pos);
-            if (state.getBlock() instanceof IBeamHandler) {
-                ((IBeamHandler) state.getBlock()).onBeam(level, pos, this);
-            }
-        }
-        if (trace instanceof EntityHitResult entityHitResult) {
-            Entity entity = entityHitResult.getEntity();
-            if (entity instanceof ItemEntity itemEntity) {
-                BeamRecipeInput input = new BeamRecipeInput(this,
-                        Collections.singletonList(itemEntity.getItem()),
-                        this.color.getAlpha());
-                Optional<RecipeHolder<BeamRecipe>> optional = level.getServer().getRecipeManager().getRecipeFor(
-                        ModRecipeTypes.BEAM_TYPE.get(), input, level
-                );
-                ItemStack result = optional.map(RecipeHolder::value)
-                        .map(e -> e.assemble(input, level.registryAccess()))
-                        .orElse(ItemStack.EMPTY);
-                if (!result.isEmpty()) {
-                    ItemEntity entity2 = new ItemEntity(level,
-                            endLoc.x, endLoc.y, endLoc.z, result);
-                    level.addFreshEntity(entity2);
-                    itemEntity.setItem(itemEntity.getItem().consumeAndReturn(itemEntity.getItem().getCount() - 1, null));
+        this.fire(trace ->{
+            if (trace instanceof BlockHitResult) {
+                BlockPos pos = BlockPos.containing(endLoc);
+                BlockState state = level.getBlockState(pos);
+                if (state.getBlock() instanceof IBeamHandler) {
+                    ((IBeamHandler) state.getBlock()).onBeam(level, pos, this);
                 }
             }
-        }
-        PacketDistributor.sendToAllPlayers(new PacketLaserFX(initLoc, endLoc, color));
+            if (trace instanceof EntityHitResult entityHitResult) {
+                Entity entity = entityHitResult.getEntity();
+                if (entity instanceof ItemEntity itemEntity) {
+                    BeamRecipeInput input = new BeamRecipeInput(this,
+                            Collections.singletonList(itemEntity.getItem()),
+                            this.color.getAlpha());
+                    Optional<RecipeHolder<BeamRecipe>> optional = level.getServer().getRecipeManager().getRecipeFor(
+                            ModRecipeTypes.BEAM_TYPE.get(), input, level
+                    );
+                    ItemStack result = optional.map(RecipeHolder::value)
+                            .map(e -> e.assemble(input, level.registryAccess()))
+                            .orElse(ItemStack.EMPTY);
+                    if (!result.isEmpty()) {
+                        ItemEntity entity2 = new ItemEntity(level,
+                                endLoc.x, endLoc.y, endLoc.z, result);
+                        level.addFreshEntity(entity2);
+                        itemEntity.setItem(itemEntity.getItem().consumeAndReturn(itemEntity.getItem().getCount() - 1, null));
+                    }
+                }
+            }
+        });
     }
-    public  void spawnWithFunction(Consumer<HitResult> consumer){
+    public void fire(Consumer<HitResult> consumer){
         if (level.isClientSide()) return;
         trace = new RayTrace(level, rotation, initLoc, range)
                 .setEntityFilter(entity -> {
@@ -119,10 +111,31 @@ public class Beam {
         consumer.accept(trace);
         PacketDistributor.sendToAllPlayers(new PacketLaserFX(initLoc, endLoc, color));
     }
+    public void fire(Consumer<HitResult> consumer, Predicate<Entity> toSkip){
+        if (level.isClientSide()) return;
+        trace = new RayTrace(level, rotation, initLoc, range)
+                .setEntityFilter(toSkip)
+                .trace();
+        if (trace == null) return;
+        this.endLoc = trace.getLocation();
+        consumer.accept(trace);
+        PacketDistributor.sendToAllPlayers(new PacketLaserFX(initLoc, endLoc, color));
+    }
 
     public Beam createSimilarBeam(Vec3 slope) {
         return new Beam(endLoc, slope, level, color).increaseLife();
     }
-
-
+    public List<Entity> getEntitiesInRange() {
+        BlockTracker tracker = new BlockTracker(level);
+        List<Entity> entities1 = new ArrayList<>();
+        tracker.addBeam(this);
+        for(BlockPos pos : tracker.locations.keys()){
+            AABB aabb = new AABB(pos);
+            List<Entity> entities = level.getEntities(null, aabb);
+            entities.forEach(entity -> {
+                if(entity!=null)entities1.add(entity);
+            });
+        }
+        return entities1;
+    }
 }
