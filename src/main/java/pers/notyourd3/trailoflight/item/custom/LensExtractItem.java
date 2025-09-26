@@ -46,7 +46,7 @@ public class LensExtractItem extends AbstractLensItem{
         });
         beam.getEntitiesInRange().forEach(entity -> {
             if(entity instanceof ItemEntity entity1){
-                Vec3 motion = beam.initLoc.subtract(entity1.position()).normalize().scale(1.5);
+                Vec3 motion = beam.initLoc.subtract(entity1.position()).normalize().scale(0.2);
                 entity1.lerpMotion(motion.x, motion.y, motion.z);
             }
         });
