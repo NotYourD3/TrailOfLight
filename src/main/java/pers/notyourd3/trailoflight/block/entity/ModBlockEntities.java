@@ -47,9 +47,11 @@ public class ModBlockEntities {
             
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends PrismBlockEntity>> PRISM =
             registerEntity("prism", PrismBlockEntity::new, ModBlocks.PRISM);
+            
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserEmitterEntity>> EMITTER =
+            registerEntity("emitter", LaserEmitterEntity::new, ModBlocks.LASER_EMITTER);
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
-
 }

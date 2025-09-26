@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import pers.notyourd3.trailoflight.block.custom.AbstractGeneratorBlock;
-import pers.notyourd3.trailoflight.block.custom.ILaserEmitter;
+import pers.notyourd3.trailoflight.block.custom.LaserEmitterBlock;
 import pers.notyourd3.trailoflight.block.custom.LaserGeneratorBlock;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.feature.Beam;
@@ -28,7 +28,7 @@ public class LaserGeneratorEntity extends BlockEntity {
             if (state.getBlock() instanceof AbstractGeneratorBlock block) {
                 color = block.getBeamColor();
             }
-            if(level.getBlockState(pos.relative(state.getValue(LaserGeneratorBlock.FACING))).getBlock() instanceof ILaserEmitter emitter){
+            if(level.getBlockState(pos.relative(state.getValue(LaserGeneratorBlock.FACING))).getBlock() instanceof LaserEmitterBlock emitter){
                 emitter.emitLaser(color,level,pos.relative(state.getValue(LaserGeneratorBlock.FACING)));
             }else{
             Beam beam = new Beam(pos.getCenter(), state.getValue(LaserGeneratorBlock.FACING).getUnitVec3(), level, color);

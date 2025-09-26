@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import pers.notyourd3.trailoflight.item.custom.LaserPointerItem;
+import pers.notyourd3.trailoflight.item.custom.LensExtractItem;
 import pers.notyourd3.trailoflight.item.custom.LightSaberItem;
 import pers.notyourd3.trailoflight.item.custom.ScrewDriverItem;
 
@@ -30,6 +31,7 @@ public class ModItems {
                             .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                             .add(Attributes.ATTACK_SPEED, new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                             .build())));
+    public static final DeferredItem<Item> LENS_EXTRACT = ITEMS.registerItem("lens_extract",properties -> new LensExtractItem( properties.stacksTo(1)));
 
     public static void register(IEventBus eventbus) {
         ITEMS.register(eventbus);

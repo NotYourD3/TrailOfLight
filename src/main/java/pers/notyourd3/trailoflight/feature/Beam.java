@@ -21,6 +21,7 @@ import pers.notyourd3.trailoflight.recipe.custom.BeamRecipeInput;
 import java.awt.*;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 
 public class Beam {
@@ -102,6 +103,20 @@ public class Beam {
                 }
             }
         }
+        PacketDistributor.sendToAllPlayers(new PacketLaserFX(initLoc, endLoc, color));
+    }
+    public  void spawnWithFunction(Consumer<HitResult> consumer){
+        if (level.isClientSide()) return;
+        trace = new RayTrace(level, rotation, initLoc, range)
+                .setEntityFilter(entity -> {
+                    if (entity == null) return true;
+                    if (entityToSkip == null) return true;
+                    return entity.getUUID() != entityToSkip.getUUID();
+                })
+                .trace();
+        if (trace == null) return;
+        this.endLoc = trace.getLocation();
+        consumer.accept(trace);
         PacketDistributor.sendToAllPlayers(new PacketLaserFX(initLoc, endLoc, color));
     }
 
