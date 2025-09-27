@@ -26,6 +26,7 @@ public class ChargerEntityRenderer implements BlockEntityRenderer<ChargerEntity>
         if (!stack.isEmpty()) {
             poseStack.pushPose();
             poseStack.translate(0.5, 1.2, 0.5);
+            poseStack.scale(0.5f, 0.5f, 0.5f);
             poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             /*
