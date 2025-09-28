@@ -20,19 +20,24 @@ public class ModCreativeTabs {
                     .icon(() -> ModItems.LIGHT_SABER.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         output.acceptAll(Stream.of(
+                                ModBlocks.CHARGER,
+                                ModBlocks.LASER_GENERATOR,
+                                ModBlocks.REFLECTION_CHAMBER,
+                                ModBlocks.MAGNIFIER,
+                                ModBlocks.LASER_EMITTER,
+                                ModBlocks.LASER_SENSOR,
+                                ModBlocks.LASER_ASSEMBLY_TABLE,
+                                ModBlocks.MIRROR,
+                                ModBlocks.PRISM
+                        ).map(sup -> sup.get().asItem().getDefaultInstance()).toList());
+                        output.acceptAll(Stream.of(
                                 ModItems.LIGHT_SABER,
                                 ModItems.LAMBENT_CRYSTAL_DUST,
                                 ModItems.GLITTERING_INGOT,
                                 ModItems.SCREW_DRIVER,
+                                ModItems.LENS_EXTRACT,
                                 ModItems.LASER_POINTER
                         ).map(sup -> sup.get().getDefaultInstance()).toList());
-                        output.acceptAll(Stream.of(
-                                ModBlocks.CHARGER,
-                                ModBlocks.LASER_GENERATOR,
-                                ModBlocks.REFLECTION_CHAMBER,
-                                ModBlocks.MIRROR,
-                                ModBlocks.MAGNIFIER
-                        ).map(sup -> sup.get().asItem().getDefaultInstance()).toList());
                     })
                     .build()
     );

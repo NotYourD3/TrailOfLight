@@ -11,13 +11,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.internal.NeoForgeItemTagsProvider;
 import pers.notyourd3.trailoflight.block.ModBlocks;
 import pers.notyourd3.trailoflight.item.ModItems;
 import pers.notyourd3.trailoflight.recipe.custom.BeamRecipeBuilder;
 
 import java.awt.*;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 public class ModRecipes extends RecipeProvider {
 
@@ -33,11 +36,21 @@ public class ModRecipes extends RecipeProvider {
                 new Color(0, 0, 0, 0),
                 new Color(255, 255, 255, 255),
                 16).save(output);
+        new BeamRecipeBuilder(new ItemStack(ModBlocks.LASER_ASSEMBLY_TABLE.get()),
+                Collections.singletonList(Ingredient.of(ModBlocks.CHARGER)),
+                new Color(0, 0, 0, 0),
+                new Color(255, 0, 255, 255),
+                32000).save(output);
         new BeamRecipeBuilder(new ItemStack(ModItems.GLITTERING_INGOT.get()),
                 Collections.singletonList(Ingredient.of(Items.COPPER_INGOT)),
                 new Color(0, 0, 0, 0),
                 new Color(255, 255, 255, 255),
                 5000).save(output);
+        new BeamRecipeBuilder(new ItemStack(ModBlocks.PRISM),
+                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS).map(Ingredient::of).toList(),
+                new Color(0, 0, 0, 0),
+                new Color(255, 255, 255, 255),
+                6400).save(output);
         ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, ModBlocks.LASER_GENERATOR.asItem())
                 .pattern("GOG")
                 .pattern("SIS")

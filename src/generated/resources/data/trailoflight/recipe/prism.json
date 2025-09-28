@@ -1,0 +1,28 @@
+{
+  "type": "trailoflight:beam",
+  "alpha": 6400,
+  "color_max": {
+    "alpha": 255,
+    "blue": 255,
+    "green": 255,
+    "red": 255
+  },
+  "color_min": {
+    "alpha": 0,
+    "blue": 0,
+    "green": 0,
+    "red": 0
+  },
+  "ingredients": [
+    "trailoflight:glittering_ingot",
+    "minecraft:glass",
+    "minecraft:glass",
+    "minecraft:glass",
+    "minecraft:glass",
+    "minecraft:glass"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:prism"
+  }
+}
