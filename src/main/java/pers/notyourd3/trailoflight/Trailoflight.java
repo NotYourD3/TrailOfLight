@@ -27,6 +27,7 @@ import pers.notyourd3.trailoflight.block.ModBlocks;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.block.entity.custom.PrismBlockEntity;
 import pers.notyourd3.trailoflight.block.entity.render.ChargerEntityRenderer;
+import pers.notyourd3.trailoflight.block.entity.render.LaserAssemblyTableRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.MirrorEntityRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.PrismBlockEntityRenderer;
 import pers.notyourd3.trailoflight.client.render.LaserRenderer;
@@ -101,6 +102,7 @@ public class Trailoflight {
         event.registerBlockEntityRenderer(ModBlockEntities.MIRROR.get(), MirrorEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.CHARGER.get(), ChargerEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.PRISM.get(), PrismBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.LASER_ASSEMBLY_TABLE.get(), LaserAssemblyTableRenderer::new);
     }
 
     public void gatherData(GatherDataEvent.Client event) {

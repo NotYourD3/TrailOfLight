@@ -51,6 +51,9 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserEmitterEntity>> EMITTER =
             registerEntity("emitter", LaserEmitterEntity::new, ModBlocks.LASER_EMITTER);
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserAssemblyTableEntity>> LASER_ASSEMBLY_TABLE =
+            registerEntity("laser_assembly_table", LaserAssemblyTableEntity::new, ModBlocks.LASER_ASSEMBLY_TABLE);
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

@@ -83,6 +83,13 @@ public class ModBlocks {
                     .strength(5.0F)
                     .noOcclusion()));
 
+    public static final DeferredBlock<Block> LASER_ASSEMBLY_TABLE = registerBlock("laser_assembly_table",
+            () -> new LaserAssemblyTableBlock(Block.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "laser_assembly_table")))
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F)
+                    .noOcclusion()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
