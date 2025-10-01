@@ -40,7 +40,7 @@ public interface IChargableItem {
     }
 
     static void decreaseBeam(ItemStack stack, int alphaDecrease) {
-        int maxAlpha = 255; // 默认值
+        int maxAlpha = 255;
         if (stack.getItem() instanceof IChargableItem chargableItem) {
             maxAlpha = chargableItem.getMaxAlpha();
         }

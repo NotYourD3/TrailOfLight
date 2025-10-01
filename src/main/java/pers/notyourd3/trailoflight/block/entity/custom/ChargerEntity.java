@@ -13,7 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.feature.Beam;
 import pers.notyourd3.trailoflight.item.custom.IChargableItem;
@@ -25,7 +26,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 public class ChargerEntity extends BlockEntity {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1);
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(1);
     private int alphaCache = 0;
 
     public ChargerEntity(BlockPos pos, BlockState blockState) {
@@ -56,16 +57,13 @@ public class ChargerEntity extends BlockEntity {
         output.putInt("alphaCache", alphaCache);
     }
 
-    public ItemStackHandler getItemHandler() {
-        return this.itemHandler;
-    }
 
     public ItemStack getStack() {
-        return this.itemHandler.getStackInSlot(0);
+        return this.itemHandler.getResource(0).toStack();
     }
 
     public void setStack(ItemStack stack) {
-        this.itemHandler.setStackInSlot(0, stack);
+        this.itemHandler.set(0, ItemResource.of(stack),stack.isEmpty() ? 0 : 1);
         alphaCache = 0;
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);

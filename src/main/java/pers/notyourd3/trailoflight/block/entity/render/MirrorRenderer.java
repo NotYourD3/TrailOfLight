@@ -3,44 +3,68 @@ package pers.notyourd3.trailoflight.block.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import pers.notyourd3.trailoflight.block.entity.custom.MirrorEntity;
+import pers.notyourd3.trailoflight.block.entity.render.state.MirrorRenderState;
 
-public class MirrorEntityRenderer implements BlockEntityRenderer<MirrorEntity> {
+// 更改泛型参数以使用新的 Render State 类
+public class MirrorRenderer implements BlockEntityRenderer<MirrorEntity, MirrorRenderState> {
     private static final ResourceLocation MIRROR_TEXTURE = ResourceLocation.fromNamespaceAndPath("trailoflight", "textures/block/mirror_face.png");
 
-    public MirrorEntityRenderer(BlockEntityRendererProvider.Context context) {
+    public MirrorRenderer(BlockEntityRendererProvider.Context context) {
     }
 
-    @Override
-    public void render(MirrorEntity mirrorEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay, Vec3 vec3) {
-        poseStack.pushPose();
 
+    @Override
+    public MirrorRenderState createRenderState() {
+        return new MirrorRenderState();
+    }
+
+
+    @Override
+    public void extractRenderState(MirrorEntity blockEntity, MirrorRenderState renderState, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPos, crumblingOverlay);
+        renderState.rotY = blockEntity.getRotY();
+        renderState.rotX = blockEntity.getRotX();
+    }
+
+
+    @Override
+    public void submit(MirrorRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        poseStack.pushPose();
+        float rotY = renderState.rotY;
+        float rotX = renderState.rotX;
+        int packedLight = renderState.lightCoords;
+        int packedOverlay = OverlayTexture.NO_OVERLAY;
 
         poseStack.translate(0.5, 0.5, 0.5);
 
-
-        poseStack.mulPose(Axis.YP.rotationDegrees(mirrorEntity.getRotY()));
-        poseStack.mulPose(Axis.XP.rotationDegrees(mirrorEntity.getRotX()));
-
+        poseStack.mulPose(Axis.YP.rotationDegrees(rotY));
+        poseStack.mulPose(Axis.XP.rotationDegrees(rotX));
 
         poseStack.translate(-0.5, -0.5, -0.5);
 
 
-        VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.entityTranslucent(MIRROR_TEXTURE));
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(MIRROR_TEXTURE));
         Matrix4f matrix = poseStack.last().pose();
-
 
         float size = 0.4375f; // 7/16，留出边框
         float depth = 0.01f;  // 镜子厚度
 
-        //back
+        // back
         drawQuad(consumer, matrix,
                 0.5f - size, 0.5f - size, 0.5f + depth, // 左下后
                 0.5f + size, 0.5f - size, 0.5f + depth, // 右下后
@@ -60,9 +84,9 @@ public class MirrorEntityRenderer implements BlockEntityRenderer<MirrorEntity> {
                 0.0f, 0.0f, 1.0f, 0.5f,
                 packedLight, packedOverlay);
 
-
         poseStack.popPose();
     }
+
 
     private void drawQuad(VertexConsumer consumer, Matrix4f matrix,
                           float x1, float y1, float z1,

@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import pers.notyourd3.trailoflight.block.ModBlocks;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import pers.notyourd3.trailoflight.block.entity.ModBlockEntities;
 import pers.notyourd3.trailoflight.feature.Beam;
 import pers.notyourd3.trailoflight.feature.BeamManager;
@@ -21,7 +21,7 @@ import pers.notyourd3.trailoflight.item.custom.AbstractLensItem;
 import java.awt.*;
 
 public class LaserEmitterEntity extends BlockEntity {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1);
+    private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(1);
     private float rotX = 0;
     private float rotY = 0;
 
@@ -55,39 +55,32 @@ public class LaserEmitterEntity extends BlockEntity {
         output.putFloat("rotY", rotY);
     }
 
-    public ItemStackHandler getItemHandler() {
-        return this.itemHandler;
-    }
 
     public ItemStack getLens() {
-        return this.itemHandler.getStackInSlot(0);
+        return this.itemHandler.getResource(0).toStack();
     }
 
     public void setLens(ItemStack stack) {
-        this.itemHandler.setStackInSlot(0, stack);
+        this.itemHandler.set(0, ItemResource.of(stack), stack.isEmpty() ? 0 : 1);
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
 
     public void emitLaser(Color color) {
-        if (level != null && !level.isClientSide) {
-            // 获取方块的方向
+        if (level != null && !level.isClientSide()) {
             var direction = getBlockState().getValue(net.minecraft.world.level.block.DirectionalBlock.FACING);
-            
-            // 创建激光束
+
             Beam beam = new Beam(
                 getBlockPos().getCenter(),
                 direction.getUnitVec3(),
                 level,
                 color
             );
-            
-            // 如果有透镜，应用透镜效果
+
             ItemStack lens = getLens();
             if (!lens.isEmpty() && lens.getItem() instanceof AbstractLensItem lensItem) {
                 lensItem.onSpawn(beam);
             } else {
-                // 默认发射激光
                 BeamManager.INSTANCE.addBeam(beam);
             }
         }

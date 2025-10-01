@@ -49,6 +49,6 @@ public class ReflectionChamberBlock extends BaseEntityBlock implements IBeamHand
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(level, type, ModBlockEntities.REFLECTION_CHAMBER.get());
+        return level.isClientSide() ? null : createTickerHelper(level, type, ModBlockEntities.REFLECTION_CHAMBER.get());
     }
 }

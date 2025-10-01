@@ -96,8 +96,7 @@ public class LaserRenderer {
     @SubscribeEvent
     public void onRenderWorldLast(RenderLevelStageEvent.AfterTranslucentBlocks event) {
         PoseStack ps = event.getPoseStack();
-        Camera camera = event.getCamera();
-        Vec3 camPos = camera.getPosition();
+        Vec3 camPos = event.getCamera().pos;
         ps.pushPose();
         ps.translate(-camPos.x, -camPos.y, -camPos.z);
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();

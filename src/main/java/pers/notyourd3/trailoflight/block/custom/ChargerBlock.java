@@ -48,8 +48,7 @@ public class ChargerBlock extends BaseEntityBlock implements IBeamHandler {
             return InteractionResult.SUCCESS;
         }
         ChargerEntity charger = getEntity(level, pos);
-        var inventory = charger.getItemHandler();
-        var input = inventory.getStackInSlot(0);
+        ItemStack input = charger.getStack();
         if (input.isEmpty() && !stack.isEmpty()) {
             charger.setStack(stack.copyWithCount(1));
             player.setItemInHand(hand, stack.consumeAndReturn(stack.getCount() - 1, null));

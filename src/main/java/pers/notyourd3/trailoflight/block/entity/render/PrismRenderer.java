@@ -3,37 +3,52 @@ package pers.notyourd3.trailoflight.block.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.Direction;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import pers.notyourd3.trailoflight.block.custom.PrismBlock;
 import pers.notyourd3.trailoflight.block.entity.custom.PrismBlockEntity;
 
-public class PrismBlockEntityRenderer implements BlockEntityRenderer<PrismBlockEntity> {
+
+public class PrismRenderer implements BlockEntityRenderer<PrismBlockEntity, BlockEntityRenderState> {
     private static final ResourceLocation PRISM_TEXTURE = ResourceLocation.fromNamespaceAndPath("trailoflight", "textures/block/prism.png");
 
-    public PrismBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+    public PrismRenderer(BlockEntityRendererProvider.Context context) {
+    }
+
+
+    @Override
+    public BlockEntityRenderState createRenderState() {
+        return new BlockEntityRenderState();
     }
 
     @Override
-    public void render(PrismBlockEntity prismEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int packedOverlay, Vec3 vec3) {
+    public void submit(BlockEntityRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
+
+
+        float rotation = 90.0F + renderState.blockState.getValue(PrismBlock.FACING).toYRot();
+        int packedLight = renderState.lightCoords;
+        int packedOverlay = OverlayTexture.NO_OVERLAY;
 
 
         poseStack.translate(0.5, 0.5, 0.5);
 
-        float rotation = 90.0F + prismEntity.getBlockState().getValue(PrismBlock.FACING).toYRot();
         poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
-
 
         poseStack.translate(-0.5, -0.5, -0.5);
 
-        VertexConsumer consumer = multiBufferSource.getBuffer(RenderType.entityTranslucent(PRISM_TEXTURE));
+        // 使用 SubmitNodeCollector 获取 VertexConsumer
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(PRISM_TEXTURE));
         Matrix4f matrix = poseStack.last().pose();
 
         float x1 = 0f, y1 = 0f, z1 = 0f;    // a
@@ -58,7 +73,6 @@ public class PrismBlockEntityRenderer implements BlockEntityRenderer<PrismBlockE
                 r, g, b, a,
                 0f, 0f, 0f, 1f, 1f, 0.5f, // UVs
                 packedLight, packedOverlay);
-
 
 
         drawQuad(consumer, matrix,
@@ -97,7 +111,11 @@ public class PrismBlockEntityRenderer implements BlockEntityRenderer<PrismBlockE
         float ny = dz1 * dx2 - dx1 * dz2;
         float nz = dx1 * dy2 - dy1 * dx2;
         float length = (float) Math.sqrt(nx * nx + ny * ny + nz * nz);
-        if (length > 0) { nx /= length; ny /= length; nz /= length; }
+        if (length > 0) {
+            nx /= length;
+            ny /= length;
+            nz /= length;
+        }
 
         consumer.addVertex(matrix, x1, y1, z1).setColor(r, g, b, a).setUv(u1, v1).setOverlay(packedOverlay).setLight(packedLight).setNormal(nx, ny, nz);
         consumer.addVertex(matrix, x2, y2, z2).setColor(r, g, b, a).setUv(u2, v2).setOverlay(packedOverlay).setLight(packedLight).setNormal(nx, ny, nz);
@@ -119,7 +137,11 @@ public class PrismBlockEntityRenderer implements BlockEntityRenderer<PrismBlockE
         float ny = dz1 * dx2 - dx1 * dz2;
         float nz = dx1 * dy2 - dy1 * dx2;
         float length = (float) Math.sqrt(nx * nx + ny * ny + nz * nz);
-        if (length > 0) { nx /= length; ny /= length; nz /= length; }
+        if (length > 0) {
+            nx /= length;
+            ny /= length;
+            nz /= length;
+        }
 
         consumer.addVertex(matrix, x1, y1, z1).setColor(r, g, b, a).setUv(u1, v1).setOverlay(packedOverlay).setLight(packedLight).setNormal(nx, ny, nz);
         consumer.addVertex(matrix, x2, y2, z2).setColor(r, g, b, a).setUv(u1, v2).setOverlay(packedOverlay).setLight(packedLight).setNormal(nx, ny, nz);

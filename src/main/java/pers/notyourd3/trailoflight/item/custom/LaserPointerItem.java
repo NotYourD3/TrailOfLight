@@ -25,7 +25,7 @@ public class LaserPointerItem extends Item implements IChargableItem {
 
     @Override
     public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         if (IChargableItem.getAlpha(stack) > 16) {
             Color color = IChargableItem.getBeamColor(stack);
             Beam beam = new Beam(livingEntity.getEyePosition(), livingEntity.getLookAngle(), level, new Color(color.getRed(), color.getGreen(), color.getBlue(), 16));
