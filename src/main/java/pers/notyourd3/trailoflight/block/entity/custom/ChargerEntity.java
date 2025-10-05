@@ -70,8 +70,10 @@ public class ChargerEntity extends BlockEntity {
     }
 
     public void onBeam(Beam beam) {
-        if (getStack().getItem() instanceof IChargableItem) {
-            IChargableItem.addBeam(getStack(), beam);
+        ItemStack stack = getStack();
+        if (stack.getItem() instanceof IChargableItem) {
+            IChargableItem.addBeam(stack, beam);
+            this.setStack(stack);
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         } else {
             BeamRecipeInput input = new BeamRecipeInput(beam,
