@@ -40,7 +40,7 @@ public class ModBlockEntities {
             registerEntity("reflection_chamber", ReflectionChamberEntity::new, ModBlocks.REFLECTION_CHAMBER);
             
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends LaserGeneratorEntity>> LASER_GENERATOR =
-            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR);
+            registerEntity("laser_generator", LaserGeneratorEntity::new, ModBlocks.LASER_GENERATOR,ModBlocks.LAVA_GENERATOR);
             
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ChargerEntity>> CHARGER =
             registerEntity("charger", ChargerEntity::new, ModBlocks.CHARGER);

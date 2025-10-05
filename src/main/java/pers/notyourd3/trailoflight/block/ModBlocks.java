@@ -89,6 +89,12 @@ public class ModBlocks {
                     .mapColor(MapColor.METAL)
                     .strength(5.0F)
                     .noOcclusion()));
+    public static final DeferredBlock<Block> LAVA_GENERATOR = registerBlock("laser_detector",
+            () -> new LavaGeneratorBlock(Block.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "laser_detector")))
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F)
+                    .noOcclusion()));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

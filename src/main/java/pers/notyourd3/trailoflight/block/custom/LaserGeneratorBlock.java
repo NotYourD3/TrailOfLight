@@ -27,25 +27,17 @@ import pers.notyourd3.trailoflight.block.entity.custom.LaserGeneratorEntity;
 import java.awt.*;
 
 public class LaserGeneratorBlock extends AbstractGeneratorBlock {
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
     private static final MapCodec<LaserGeneratorBlock> CODEC = simpleCodec(LaserGeneratorBlock::new);
 
     public LaserGeneratorBlock(Properties p_49224_) {
         super(p_49224_);
     }
 
-    @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createTickerHelper(Level level, BlockEntityType<T> type, BlockEntityType<? extends LaserGeneratorEntity> type2) {
-        return createTickerHelper(type, type2, LaserGeneratorEntity::tick);
-    }
+
 
     @Override
     public Color getBeamColor() {
         return new Color(255, 0, 0, 16);
-    }
-
-    public LaserGeneratorEntity getEntity(Level level, BlockPos pos) {
-        return (LaserGeneratorEntity) level.getBlockEntity(pos);
     }
 
     @Override
@@ -53,27 +45,12 @@ public class LaserGeneratorBlock extends AbstractGeneratorBlock {
         return CODEC;
     }
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
-    }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new LaserGeneratorEntity(blockPos, blockState);
     }
-
-    @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide() ? null : createTickerHelper(level, type, ModBlockEntities.LASER_GENERATOR.get());
-    }
-
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
