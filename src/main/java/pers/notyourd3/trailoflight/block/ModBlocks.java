@@ -89,9 +89,9 @@ public class ModBlocks {
                     .mapColor(MapColor.METAL)
                     .strength(5.0F)
                     .noOcclusion()));
-    public static final DeferredBlock<Block> LAVA_GENERATOR = registerBlock("laser_detector",
+    public static final DeferredBlock<Block> LAVA_GENERATOR = registerBlock("lava_generator",
             () -> new LavaGeneratorBlock(Block.Properties.of()
-                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "laser_detector")))
+                    .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "vlava_generator")))
                     .mapColor(MapColor.METAL)
                     .strength(5.0F)
                     .noOcclusion()));
