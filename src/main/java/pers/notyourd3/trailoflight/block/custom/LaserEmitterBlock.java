@@ -27,7 +27,7 @@ import pers.notyourd3.trailoflight.item.custom.AbstractLensItem;
 
 import java.awt.*;
 
-public class LaserEmitterBlock extends BaseEntityBlock implements IPrecision {
+public class LaserEmitterBlock extends BaseEntityBlock{
 
     public LaserEmitterBlock(Properties p_49224_) {
         super(p_49224_);
@@ -88,40 +88,6 @@ public class LaserEmitterBlock extends BaseEntityBlock implements IPrecision {
         }
         
         return InteractionResult.PASS;
-    }
-
-    @Override
-    public float getRotX(Level level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof LaserEmitterEntity emitterEntity) {
-            return emitterEntity.getRotX();
-        }
-        return 0;
-    }
-
-    @Override
-    public float getRotY(Level level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof LaserEmitterEntity emitterEntity) {
-            return emitterEntity.getRotY();
-        }
-        return 0;
-    }
-
-    @Override
-    public void setRotX(Level level, BlockPos pos, float rotX) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof LaserEmitterEntity emitterEntity) {
-            emitterEntity.setRotX(rotX);
-        }
-    }
-
-    @Override
-    public void setRotY(Level level, BlockPos pos, float rotY) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof LaserEmitterEntity emitterEntity) {
-            emitterEntity.setRotY(rotY);
-        }
     }
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {

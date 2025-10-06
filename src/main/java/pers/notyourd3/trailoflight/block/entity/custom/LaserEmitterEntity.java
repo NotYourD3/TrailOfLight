@@ -22,8 +22,6 @@ import java.awt.*;
 
 public class LaserEmitterEntity extends BlockEntity {
     private final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(1);
-    private float rotX = 0;
-    private float rotY = 0;
 
     public LaserEmitterEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.EMITTER.get(), pos, blockState);
@@ -43,16 +41,12 @@ public class LaserEmitterEntity extends BlockEntity {
     public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         itemHandler.deserialize(input);
-        rotX = input.getFloatOr("rotX", 0);
-        rotY = input.getFloatOr("rotY", 0);
     }
 
     @Override
     public void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         itemHandler.serialize(output);
-        output.putFloat("rotX", rotX);
-        output.putFloat("rotY", rotY);
     }
 
 
@@ -84,23 +78,5 @@ public class LaserEmitterEntity extends BlockEntity {
                 BeamManager.INSTANCE.addBeam(beam);
             }
         }
-    }
-
-    public float getRotX() {
-        return rotX;
-    }
-
-    public float getRotY() {
-        return rotY;
-    }
-
-    public void setRotX(float rotX) {
-        this.rotX = rotX;
-        setChanged();
-    }
-
-    public void setRotY(float rotY) {
-        this.rotY = rotY;
-        setChanged();
     }
 }
