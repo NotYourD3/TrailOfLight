@@ -73,7 +73,9 @@ public class LaserEmitterEntity extends BlockEntity {
 
             ItemStack lens = getLens();
             if (!lens.isEmpty() && lens.getItem() instanceof AbstractLensItem lensItem) {
-                lensItem.onSpawn(beam);
+                if(beam.isInRange(lensItem.getColorRange().getFirst(), lensItem.getColorRange().getSecond())) {
+                    lensItem.onSpawn(beam,lens);
+                }
             } else {
                 BeamManager.INSTANCE.addBeam(beam);
             }

@@ -1,5 +1,6 @@
 package pers.notyourd3.trailoflight.item.custom;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
@@ -11,13 +12,15 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import pers.notyourd3.trailoflight.feature.Beam;
 
+import java.awt.*;
+
 public class LensExtractItem extends AbstractLensItem {
     public LensExtractItem(Properties properties) {
         super(properties);
     }
 
     @Override
-    public void onSpawn(Beam beam) {
+    public void onSpawn(Beam beam,ItemStack  stack) {
         try (Transaction transaction = Transaction.open(null)) {
 
             beam.fire((HitResult result) -> {
@@ -65,5 +68,10 @@ public class LensExtractItem extends AbstractLensItem {
                 entity1.lerpMotion(motion);
             }
         });
+    }
+
+    @Override
+    public Pair<Color, Color> getColorRange() {
+        return new Pair<>(new Color(0, 140, 255, 64), new Color(10, 190, 255, 255));
     }
 }

@@ -30,10 +30,12 @@ import pers.notyourd3.trailoflight.block.entity.render.LaserAssemblyTableRendere
 import pers.notyourd3.trailoflight.block.entity.render.MirrorRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.PrismRenderer;
 import pers.notyourd3.trailoflight.client.render.LaserRenderer;
+import pers.notyourd3.trailoflight.event.ModEvents;
 import pers.notyourd3.trailoflight.feature.BeamManager;
 import pers.notyourd3.trailoflight.item.ModCreativeTabs;
 import pers.notyourd3.trailoflight.item.ModDataComponents;
 import pers.notyourd3.trailoflight.item.ModItems;
+import pers.notyourd3.trailoflight.item.consume.ModConsumeEffectTypes;
 import pers.notyourd3.trailoflight.network.PacketLaserFX;
 import pers.notyourd3.trailoflight.recipe.ModRecipeSerializers;
 import pers.notyourd3.trailoflight.recipe.ModRecipeTypes;
@@ -61,6 +63,7 @@ public class Trailoflight {
         ModDataComponents.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModConsumeEffectTypes.register(modEventBus);
         ModItems.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
@@ -81,6 +84,7 @@ public class Trailoflight {
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
         NeoForge.EVENT_BUS.register(BeamManager.INSTANCE);
+        NeoForge.EVENT_BUS.register(ModEvents.class);
     }
 
     private void ClientSetup(FMLClientSetupEvent event) {

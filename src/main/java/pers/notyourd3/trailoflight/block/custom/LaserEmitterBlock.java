@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+import pers.notyourd3.trailoflight.block.IBeamHandler;
 import pers.notyourd3.trailoflight.block.IPrecision;
 import pers.notyourd3.trailoflight.block.entity.custom.LaserEmitterEntity;
 import pers.notyourd3.trailoflight.feature.Beam;
@@ -27,7 +28,7 @@ import pers.notyourd3.trailoflight.item.custom.AbstractLensItem;
 
 import java.awt.*;
 
-public class LaserEmitterBlock extends BaseEntityBlock{
+public class LaserEmitterBlock extends BaseEntityBlock implements IBeamHandler {
 
     public LaserEmitterBlock(Properties p_49224_) {
         super(p_49224_);
@@ -71,13 +72,11 @@ public class LaserEmitterBlock extends BaseEntityBlock{
         if (blockEntity instanceof LaserEmitterEntity emitterEntity) {
             ItemStack lens = emitterEntity.getLens();
             if (lens.isEmpty() && !stack.isEmpty() && stack.getItem() instanceof AbstractLensItem) {
-                // 安装透镜
                 emitterEntity.setLens(stack.copyWithCount(1));
                 player.setItemInHand(hand, stack.consumeAndReturn(stack.getCount() - 1, null));
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
                 return InteractionResult.CONSUME;
             } else if (stack.isEmpty() && !lens.isEmpty()) {
-                // 取出透镜
                 ItemStack lensStack = lens.copy();
                 emitterEntity.setLens(ItemStack.EMPTY);
                 ItemEntity itemEntity = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), lensStack);
@@ -102,5 +101,10 @@ public class LaserEmitterBlock extends BaseEntityBlock{
             }
             return super.playerWillDestroy(level, pos, state, player);
 
+    }
+
+    @Override
+    public void onBeam(Level level, BlockPos pos, Beam beam) {
+        emitLaser(beam.color, level, pos);
     }
 }

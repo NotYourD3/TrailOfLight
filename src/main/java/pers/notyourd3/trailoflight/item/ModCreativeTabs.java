@@ -36,7 +36,10 @@ public class ModCreativeTabs {
                                 ModItems.GLITTERING_INGOT,
                                 ModItems.SCREW_DRIVER,
                                 ModItems.LENS_EXTRACT,
-                                ModItems.LASER_POINTER
+                                ModItems.LENS_SMELTING,
+                                ModItems.LENS_EXCAVATE,
+                                ModItems.LASER_POINTER,
+                                ModItems.ENERGY_DRINK
                         ).map(sup -> sup.get().getDefaultInstance()).toList());
                     })
                     .build()
