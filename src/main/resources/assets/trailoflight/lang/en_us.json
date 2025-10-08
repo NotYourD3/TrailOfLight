@@ -5,6 +5,13 @@
   "item.trailoflight.light_saber": "Light Saber",
   "item.trailoflight.screw_driver": "Screw Driver",
   "item.trailoflight.laser_pointer": "Laser Pointer",
+  "item.trailoflight.lens_extract": "Extract Lens",
+  "item.trailoflight.lens_excavate": "Excavate Lens",
+  "item.trailoflight.lens_smelting": "Smelt Lens",
   "block.trailoflight.charger": "Charger",
-  "block.trailoflight.reflection_chamber": "Reflection Chamber"
+  "block.trailoflight.reflection_chamber": "Reflection Chamber",
+  "block.trailoflight.laser_generator": "Laser Generator",
+  "block.trailoflight.laser_sensor": "Laser Sensor",
+  "block.trailoflight.laser_assembly_table": "Laser Assembly Table"
+
 }

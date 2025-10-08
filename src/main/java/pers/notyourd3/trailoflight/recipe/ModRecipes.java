@@ -7,6 +7,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -124,6 +125,23 @@ public class ModRecipes extends RecipeProvider {
                 .pattern("G G")
                 .pattern("GGG")
                 .define('G', ModItems.GLITTERING_INGOT)
+                .unlockedBy("has_item", has(Items.GLOWSTONE_DUST))
+                .save(output);
+        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, ModItems.ENERGY_DRINK)
+                .pattern("G G")
+                .pattern("GAG")
+                .pattern("GGG")
+                .define('G', ModItems.GLITTERING_INGOT)
+                .define('A', Items.SUGAR)
+                .unlockedBy("has_item", has(ModItems.GLITTERING_INGOT))
+                .save(output);
+        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, ModBlocks.LASER_SENSOR)
+                .pattern("GAG")
+                .pattern("ABA")
+                .pattern("GAG")
+                .define('G', ItemTags.WOOL)
+                .define('A', ModItems.LAMBENT_CRYSTAL_DUST)
+                .define('B', Items.REDSTONE)
                 .unlockedBy("has_item", has(Items.GLOWSTONE_DUST))
                 .save(output);
 

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "minecraft:sugar",
+    "G": "trailoflight:glittering_ingot"
+  },
+  "pattern": [
+    "G G",
+    "GAG",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:energy_drink"
+  }
+}

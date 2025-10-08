@@ -22,6 +22,7 @@ public class ModCreativeTabs {
                         output.acceptAll(Stream.of(
                                 ModBlocks.CHARGER,
                                 ModBlocks.LASER_GENERATOR,
+                                ModBlocks.LAVA_GENERATOR,
                                 ModBlocks.REFLECTION_CHAMBER,
                                 ModBlocks.MAGNIFIER,
                                 ModBlocks.LASER_EMITTER,

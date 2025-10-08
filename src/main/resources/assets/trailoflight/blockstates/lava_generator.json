@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "trailoflight:block/laser_generator_vertical",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "trailoflight:block/laser_generator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "trailoflight:block/laser_generator"
+    },
+    "facing=south": {
+      "model": "trailoflight:block/laser_generator",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "trailoflight:block/laser_generator_vertical"
+    },
+    "facing=west": {
+      "model": "trailoflight:block/laser_generator",
+      "y": 270
+    }
+  }
+}
