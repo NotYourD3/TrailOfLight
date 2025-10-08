@@ -19,7 +19,7 @@ import org.joml.Matrix4f;
 import pers.notyourd3.trailoflight.block.entity.custom.MirrorEntity;
 import pers.notyourd3.trailoflight.block.entity.render.state.MirrorRenderState;
 
-// 更改泛型参数以使用新的 Render State 类
+
 public class MirrorRenderer implements BlockEntityRenderer<MirrorEntity, MirrorRenderState> {
     private static final ResourceLocation MIRROR_TEXTURE = ResourceLocation.fromNamespaceAndPath("trailoflight", "textures/block/mirror_face.png");
 
@@ -61,25 +61,25 @@ public class MirrorRenderer implements BlockEntityRenderer<MirrorEntity, MirrorR
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityTranslucent(MIRROR_TEXTURE));
         Matrix4f matrix = poseStack.last().pose();
 
-        float size = 0.4375f; // 7/16，留出边框
-        float depth = 0.01f;  // 镜子厚度
+        float size = 0.4375f; // 7/16, leave space for frame
+        float depth = 0.01f;  // mirror thickness
 
         // back
         drawQuad(consumer, matrix,
-                0.5f - size, 0.5f - size, 0.5f + depth, // 左下后
-                0.5f + size, 0.5f - size, 0.5f + depth, // 右下后
-                0.5f + size, 0.5f + size, 0.5f + depth, // 右上后
-                0.5f - size, 0.5f + size, 0.5f + depth, // 左上后
+                0.5f - size, 0.5f - size, 0.5f + depth, // left bottom back
+                0.5f + size, 0.5f - size, 0.5f + depth, // right bottom back
+                0.5f + size, 0.5f + size, 0.5f + depth, // right top back
+                0.5f - size, 0.5f + size, 0.5f + depth, // left top back
                 0.2f, 0.2f, 0.2f, 1.0f,
-                0.0f, 0.5f, 1.0f, 1.0f, // UV坐标
+                0.0f, 0.5f, 1.0f, 1.0f, // UV coordinates
                 packedLight, packedOverlay);
 
         // front
         drawQuad(consumer, matrix,
-                0.5f - size, 0.5f - size, 0.5f - depth, // 左下前
-                0.5f - size, 0.5f + size, 0.5f - depth, // 左上前
-                0.5f + size, 0.5f + size, 0.5f - depth, // 右上前
-                0.5f + size, 0.5f - size, 0.5f - depth, // 右下前
+                0.5f - size, 0.5f - size, 0.5f - depth, // left bottom front
+                0.5f - size, 0.5f + size, 0.5f - depth, // left top front
+                0.5f + size, 0.5f + size, 0.5f - depth, // right top front
+                0.5f + size, 0.5f - size, 0.5f - depth, // right bottom front
                 1.0f, 1.0f, 1.0f, 1.0f,
                 0.0f, 0.0f, 1.0f, 0.5f,
                 packedLight, packedOverlay);
@@ -116,7 +116,6 @@ public class MirrorRenderer implements BlockEntityRenderer<MirrorEntity, MirrorR
             nz /= length;
         }
 
-        // 绘制四个顶点（两个三角形组成一个四边形）
         consumer.addVertex(matrix, x1, y1, z1)
                 .setColor(r, g, b, a)
                 .setUv(u1, v1)

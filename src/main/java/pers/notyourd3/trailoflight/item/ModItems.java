@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantable;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -37,7 +38,9 @@ public class ModItems {
     public static final DeferredItem<Item> LENS_SMELTING = ITEMS.registerItem("lens_smelting",
             properties -> new LensSmeltingItem(properties.stacksTo(1)));
     public static final DeferredItem<Item> LENS_EXCAVATE = ITEMS.registerItem("lens_excavate",
-            properties -> new LensExcavateItem(properties.stacksTo(1)));
+            properties -> new LensExcavateItem(properties
+                    .component(DataComponents.ENCHANTABLE,new Enchantable(10))
+                    .stacksTo(1)));
     public static final DeferredItem<Item> ENERGY_DRINK = ITEMS.registerItem("energy_drink",
             properties -> new EnergyDrinkItem(properties.component(
                     DataComponents.CONSUMABLE,

@@ -8,6 +8,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.common.Tags;
 import pers.notyourd3.trailoflight.feature.Beam;
 
 import java.awt.*;
@@ -19,8 +22,15 @@ public class LensSmeltingItem extends AbstractLensItem {
     }
 
     @Override
-    public void onSpawn(Beam beam,ItemStack stack) {
-        beam.fire(hitResult -> {}, entity -> !(entity instanceof ItemEntity));
+    public void onSpawn(Beam beam, ItemStack stack) {
+        beam.fire(hitResult -> {
+            if (hitResult instanceof BlockHitResult hit && Math.random() < 0.0005 * beam.color.getAlpha()) {
+                if (beam.level.getBlockState(hit.getBlockPos()).is(Tags.Blocks.OBSIDIANS) ||
+                        beam.level.getBlockState(hit.getBlockPos()).is(Tags.Blocks.STONES)) {
+                    beam.level.setBlockAndUpdate(hit.getBlockPos(), Blocks.LAVA.defaultBlockState());
+                }
+            }
+        }, entity -> !(entity instanceof ItemEntity));
         beam.getEntitiesInRange().stream()
                 .filter(entity -> entity instanceof ItemEntity)
                 .map(entity -> (ItemEntity) entity)
@@ -45,7 +55,7 @@ public class LensSmeltingItem extends AbstractLensItem {
                             newEntity.setDefaultPickUpDelay();
                             beam.level.addFreshEntity(newEntity);
                             originalStack.consume(1, null);
-                            ParticleUtils.spawnParticles(beam.level,itemEntity.getOnPos(),15,0.5,0.5,false, ParticleTypes.FLAME);
+                            ParticleUtils.spawnParticles(beam.level, itemEntity.getOnPos(), 15, 0.5, 0.5, false, ParticleTypes.FLAME);
                         }
                     }
                 });

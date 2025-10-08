@@ -20,7 +20,7 @@ public class LensExtractItem extends AbstractLensItem {
     }
 
     @Override
-    public void onSpawn(Beam beam,ItemStack  stack) {
+    public void onSpawn(Beam beam, ItemStack stack) {
         try (Transaction transaction = Transaction.open(null)) {
 
             beam.fire((HitResult result) -> {

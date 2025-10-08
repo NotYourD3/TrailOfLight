@@ -28,7 +28,6 @@ public class BeamManager {
 
         for (Beam beam : beamsToProcess) {
             beam.fire();
-            // 假设你的 onBeam 方法会更新一个内部状态，或者你在这里捕捉光线追踪结果
             if (beam.trace instanceof BlockHitResult) {
                 BlockPos pos = BlockPos.containing(beam.endLoc);
                 BlockState state = beam.level.getBlockState(pos);
@@ -38,7 +37,7 @@ public class BeamManager {
             }
         }
 
-        // 找出上一刻被激活但本刻没有的方块
+
         Set<BlockPos> toDeactivate = new HashSet<>(lastTickActivatedBlocks.keySet());
         toDeactivate.removeAll(currentTickActivatedBlocks.keySet());
 

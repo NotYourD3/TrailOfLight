@@ -1,7 +1,10 @@
-// 1.21.8	2025-09-28T22:57:54.6676787	
+// 1.21.9	2025-10-07T21:18:06.8363598	
 60885ebdf8f070bda085812a0bafabc22a13385f data/trailoflight/advancement/recipes/glittering_ingot.json
 bdabe81535f33d01d8f1f22b1194a425c8de3128 data/trailoflight/advancement/recipes/lambent_powder.json
 5851d8be5e966bf3b4dd0beec34ca418922e4501 data/trailoflight/advancement/recipes/laser_assembly_table.json
+95f706d014290e308dcbf63ab1c609f430be4323 data/trailoflight/advancement/recipes/lens_excavate.json
+ca90a82963c297e1e03cf57afe47f69a374e3fe2 data/trailoflight/advancement/recipes/lens_extract.json
+4cda929ce524e0034a57ffbc097ad5844ba4766f data/trailoflight/advancement/recipes/lens_smelting.json
 7a5c4186ddf2ada0832571d7c7376f36b759b112 data/trailoflight/advancement/recipes/misc/charger.json
 eef403f6eb907a06ec0ff3a76e3a1c82ae7f7775 data/trailoflight/advancement/recipes/misc/laser_generator.json
 76dec68c44b7f6b2088926eac845824ce31b2709 data/trailoflight/advancement/recipes/misc/laser_pointer.json
@@ -16,6 +19,9 @@ b0b13dc752cdc7505f0323cf7fc3d37a41792d61 data/trailoflight/recipe/glittering_ing
 1516605c5c407f0216a64afbb3a9ceb97f77e96b data/trailoflight/recipe/laser_assembly_table.json
 38f48838569bb7da8df2915f42d5017bbbf20e75 data/trailoflight/recipe/laser_generator.json
 e5d031b770444a7ec7ef1fd8a7ed8b7c5c564694 data/trailoflight/recipe/laser_pointer.json
+4496f8e56ad3c936b129cbf1419ee5a275d6cb91 data/trailoflight/recipe/lens_excavate.json
+c7bacaebad27bca7c2f5c2852d7750927c39f0ce data/trailoflight/recipe/lens_extract.json
+a74986db5ef70644b3bea6f70c9629c725976404 data/trailoflight/recipe/lens_smelting.json
 567e7dfb32ecc59e3c5d5f597bd2e75812fc26ae data/trailoflight/recipe/light_saber.json
 d62a15383248c1025b9b06f21f014b1d1c229ed1 data/trailoflight/recipe/mirror.json
 8770326e53d56a53317ec766676522226a3fae77 data/trailoflight/recipe/prism.json

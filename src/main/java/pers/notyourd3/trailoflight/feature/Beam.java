@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 
 
 public class Beam {
-    public static final int MAX_BOUNCES = 8; // 最大反弹次数
+    public static final int MAX_BOUNCES = 8;
     private final double range = 200;
     public Vec3 initLoc;
     public Vec3 endLoc;

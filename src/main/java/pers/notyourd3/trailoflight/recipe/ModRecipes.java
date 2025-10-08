@@ -47,10 +47,27 @@ public class ModRecipes extends RecipeProvider {
                 new Color(255, 255, 255, 255),
                 5000).save(output);
         new BeamRecipeBuilder(new ItemStack(ModBlocks.PRISM),
-                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS).map(Ingredient::of).toList(),
+                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS,Items.GLASS)
+                        .map(Ingredient::of).toList(),
                 new Color(0, 0, 0, 0),
                 new Color(255, 255, 255, 255),
                 6400).save(output);
+        new BeamRecipeBuilder(new ItemStack(ModItems.LENS_EXTRACT.get()),
+                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS_PANE,Items.ENDER_CHEST).map(Ingredient::of).toList(),
+                new Color(0, 0, 0, 0),
+                new Color(255, 255, 255, 255),
+                5000).save(output);
+        new BeamRecipeBuilder(new ItemStack(ModItems.LENS_SMELTING.get()),
+                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS_PANE,Items.MAGMA_BLOCK,Items.BLAZE_POWDER,Items.BLAST_FURNACE).map(Ingredient::of).toList(),
+                new Color(0, 0, 0, 0),
+                new Color(255, 255, 255, 255),
+                5000).save(output);
+        new BeamRecipeBuilder(new ItemStack(ModItems.LENS_EXCAVATE.get()),
+                Stream.of(ModItems.GLITTERING_INGOT,Items.GLASS_PANE,Items.IRON_BLOCK,Items.IRON_BLOCK,Items.IRON_BLOCK,Items.IRON_BLOCK,Items.DIAMOND_PICKAXE)
+                        .map(Ingredient::of).toList(),
+                new Color(0, 0, 0, 0),
+                new Color(255, 255, 255, 255),
+                5000).save(output);
         ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, ModBlocks.LASER_GENERATOR.asItem())
                 .pattern("GOG")
                 .pattern("SIS")

@@ -1,0 +1,29 @@
+{
+  "type": "trailoflight:beam",
+  "alpha": 5000,
+  "color_max": {
+    "alpha": 255,
+    "blue": 255,
+    "green": 255,
+    "red": 255
+  },
+  "color_min": {
+    "alpha": 0,
+    "blue": 0,
+    "green": 0,
+    "red": 0
+  },
+  "ingredients": [
+    "trailoflight:glittering_ingot",
+    "minecraft:glass_pane",
+    "minecraft:iron_block",
+    "minecraft:iron_block",
+    "minecraft:iron_block",
+    "minecraft:iron_block",
+    "minecraft:diamond_pickaxe"
+  ],
+  "result": {
+    "count": 1,
+    "id": "trailoflight:lens_excavate"
+  }
+}
