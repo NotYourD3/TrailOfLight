@@ -12,6 +12,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import pers.notyourd3.trailoflight.feature.Beam;
 
 import java.awt.*;
@@ -32,12 +33,13 @@ public class LensExcavateItem extends AbstractLensItem {
                         return;
                     }
                     float A = 1+(float)stack.getEnchantmentLevel(beam.level.registryAccess().get(Enchantments.EFFICIENCY).orElseThrow());
-                    float successChance = (5.0F * (float) beam.color.getAlpha()) / (hardness * 20.0F)/15*A;
+                    float successChance = (5.0F * (float) beam.color.getAlpha()) / (hardness * 40.0F)/15*A;
                     successChance = Math.min(1.0F, successChance);
                     if (Math.random() > successChance) {
                         return;
                     }
-                    FakePlayer player = new FakePlayer((ServerLevel) beam.level, new GameProfile(UUID.randomUUID(), "JMComic350234"));
+                    FakePlayer player = //new FakePlayer((ServerLevel) beam.level, new GameProfile(UUID.randomUUID(), "JMComic350234"));
+                            FakePlayerFactory.getMinecraft((ServerLevel) beam.level);
                     player.setGameMode(GameType.SURVIVAL);
                     player.setItemInHand(InteractionHand.MAIN_HAND, stack);
                     ServerPlayerGameMode mode = player.gameMode;

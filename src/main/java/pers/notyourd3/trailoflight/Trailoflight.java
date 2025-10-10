@@ -29,13 +29,11 @@ import pers.notyourd3.trailoflight.block.entity.render.ChargerRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.LaserAssemblyTableRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.MirrorRenderer;
 import pers.notyourd3.trailoflight.block.entity.render.PrismRenderer;
+import pers.notyourd3.trailoflight.client.ModModels;
 import pers.notyourd3.trailoflight.client.render.LaserRenderer;
 import pers.notyourd3.trailoflight.event.ModEvents;
 import pers.notyourd3.trailoflight.feature.BeamManager;
-import pers.notyourd3.trailoflight.item.ModCreativeTabs;
-import pers.notyourd3.trailoflight.item.ModDataComponents;
-import pers.notyourd3.trailoflight.item.ModItemTags;
-import pers.notyourd3.trailoflight.item.ModItems;
+import pers.notyourd3.trailoflight.item.*;
 import pers.notyourd3.trailoflight.item.consume.ModConsumeEffectTypes;
 import pers.notyourd3.trailoflight.network.PacketLaserFX;
 import pers.notyourd3.trailoflight.recipe.ModRecipeSerializers;
@@ -115,6 +113,7 @@ public class Trailoflight {
         event.createProvider(ModRecipes.Runner::new);
         event.createProvider((output, provider) ->
                 new LootTableProvider(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK)), provider));
+        event.createProvider(ModModels::new);
     }
 
     public void registerColorHandlers(RegisterColorHandlersEvent.ItemTintSources event) {

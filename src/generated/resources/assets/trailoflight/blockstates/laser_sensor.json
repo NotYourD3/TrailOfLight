@@ -1,11 +1,10 @@
 {
   "variants": {
+    "powered=false": {
+      "model": "trailoflight:block/laser_sensor"
+    },
     "powered=true": {
       "model": "trailoflight:block/laser_sensor_on"
-    },
-    "powered=false": {
-      "model": "trailoflight:block/laser_sensor",
-      "y": 90
     }
   }
 }

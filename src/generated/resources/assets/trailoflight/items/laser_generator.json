@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "trailoflight:block/laser_generator"
+  }
+}

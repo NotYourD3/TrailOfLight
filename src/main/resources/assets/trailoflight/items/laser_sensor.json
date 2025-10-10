@@ -1,9 +1,0 @@
-{
-  "model": {
-    "type": "minecraft:model",
-    "model": "trailoflight:item/laser_sensor"
-  },
-  "properties": {
-    "hand_animation_on_swap": false
-  }
-}

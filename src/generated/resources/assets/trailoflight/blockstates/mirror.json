@@ -1,11 +1,11 @@
 {
   "variants": {
-    "facing=north": {
-      "model": "trailoflight:block/mirror"
-    },
     "facing=east": {
       "model": "trailoflight:block/mirror",
       "y": 90
+    },
+    "facing=north": {
+      "model": "trailoflight:block/mirror"
     },
     "facing=south": {
       "model": "trailoflight:block/mirror",

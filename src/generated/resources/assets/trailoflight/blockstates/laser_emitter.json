@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "trailoflight:block/laser_emitter"
+    }
+  }
+}

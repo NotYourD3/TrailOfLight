@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/orientable_vertical",
   "textures": {
-    "front": "minecraft:block/dispenser_front_vertical",
+    "front": "minecraft:block/dispenser_front",
     "side": "minecraft:block/red_concrete"
   }
 }
